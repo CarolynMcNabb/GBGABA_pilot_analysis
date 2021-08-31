@@ -154,12 +154,12 @@ files       = {'/Volumes/gold/cinn/2020/gbgaba/pilot_BIDS/sub-002/ses-01/mrs/meg
 % (OPTIONAL)
 % Leave empty for GE P-files (.7) - these include water reference data by
 % default.
-% files_ref   = {'/Volumes/gold/cinn/2020/gbgaba/pilot_BIDS/sub-002/ses-01/mrs/mega-press_ref/meas_MID00069_FID48860_svs_edit_mgs_univ_H2O.dat'};
-files_ref = {};
+files_ref   = {'/Volumes/gold/cinn/2020/gbgaba/pilot_BIDS/sub-002/ses-01/mrs/mega-press_ref/meas_MID00069_FID48860_svs_edit_mgs_univ_H2O.dat'};
+% files_ref = {};
 % Specify water data for quantification (e.g. short-TE water scan)
 % (OPTIONAL)
-% files_w     = {'/Volumes/gold/cinn/2020/gbgaba/pilot_BIDS/sub-002/ses-01/mrs/water/meas_MID00070_FID48861_svs_se_30_STR_H2O.dat'};
-files_w = {};                 
+files_w     = {'/Volumes/gold/cinn/2020/gbgaba/pilot_BIDS/sub-002/ses-01/mrs/water/meas_MID00070_FID48861_svs_se_30_STR_H2O.dat'};
+% files_w = {};                 
            
 % Specify metabolite-nulled data for quantification
 % (OPTIONAL)
