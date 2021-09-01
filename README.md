@@ -2,6 +2,7 @@
  *MRI analysis scripts for Gut Brain GABA pilot*
  
  ## Proposed changes to acquisition protocol for main study:
+ - find a way to include session in dicom header so it translates to json file and subsequent bids format.
  
 ### 1. fMRI
  

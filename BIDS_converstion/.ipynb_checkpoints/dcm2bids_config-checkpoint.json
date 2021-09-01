@@ -14,7 +14,7 @@
         "modalityLabel": "bold",
         "customLabels": "task-rest",
         "criteria": {
-            "SeriesDescription": "*Resting_ep2d_bold*"
+            "SeriesDescription": "*cmrr_mbep2d_bold_HCP*"
             },
  	"sidecarChanges": {
                 "TaskName": "rest"
@@ -48,22 +48,35 @@
         "intendedFor": 0
         },
         {
-        "dataType": "dwi",
-        "modalityLabel": "dwi",
-        "customLabels": "dir-up",
+        "dataType": "anat",
+        "modalityLabel": "mp2rage",
+        "customLabels": "TI1",
         "criteria": {
-            "SequenceName": "*ep_b0",
-	"ImageType": ["ORIGINAL", "PRIMARY", "DIFFUSION", "NONE", "ND", "NORM", "MOSAIC"],
-		"SeriesDescription": "*ep2d_diff*"
+            "ProtocolName": "*mp2rage*",
+	"ImageType": ["ORIGINAL", "PRIMARY", "M", "ND", "NORM"],
+		"SeriesDescription": "*t1_mp2rage_sag_p3_iso_INV1*"
             }
         },
         {
-        "dataType": "dwi",
-        "modalityLabel": "dwi",
-        "customLabels": "dir-down",
+        "dataType": "anat",
+        "modalityLabel": "mp2rage",
+        "customLabels": "TI2",
         "criteria": {
-		"SeriesDescription": "*diff_blip_down*"
+            "ProtocolName": "*mp2rage*",
+	"ImageType": ["ORIGINAL", "PRIMARY", "M", "ND", "NORM"],
+		"SeriesDescription": "*t1_mp2rage_sag_p3_iso_INV2*"
+            }
+        },
+        {
+        "dataType": "anat",
+        "modalityLabel": "mp2rage",
+        "customLabels": "UNI",
+        "criteria": {
+            "ProtocolName": "*mp2rage*",
+	"ImageType": ["ORIGINAL", "PRIMARY", "M", "ND", "UNI"],
+		"SeriesDescription": "*t1_mp2rage_sag_p3_iso_UNI_Images*"
             }
         }
+
     ]
 }
