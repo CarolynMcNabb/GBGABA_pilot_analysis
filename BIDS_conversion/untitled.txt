@@ -1,0 +1,2 @@
+notes:
+uni mp2rage file did not get copied over during conversion - must be something wrong with the json config file - maybe not specific enough. 

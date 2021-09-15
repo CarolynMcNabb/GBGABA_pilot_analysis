@@ -6,7 +6,7 @@ cd('/')
 
 %add path to SPM12
 % addpath('/Users/Carolyn/Documents/MATLAB/spm12')
-addpath('Volumes/GoogleDrive/My Drive/GitHub/CAP_Toolbox/spm12')
+addpath('/Volumes/GoogleDrive/My Drive/GitHub/CAP_Toolbox/spm12')
 
 %add folders and subfolders for Osprey to path
 addpath(genpath('/Volumes/GoogleDrive/My Drive/GitHub/osprey'))

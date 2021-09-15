@@ -44,11 +44,11 @@ t1_mprage_DC_sag_HCP_256_32ch
 2.1. Install python 3 and dcm2bids
 In terminal, type:
 ```
-sudo apt install python3.7
-sudo apt install python-pip
+module load anaconda
+sudo apt install python3-pip
 pip install dcm2bids
 ```
-2.2. Set up environment for dcm2bids
+2.2. Set up environment for dcm2bids 
 ```
 sudo apt install gedit
 gedit environment.yml 
@@ -101,48 +101,50 @@ dcm2bids --help
 ```
 Use the dcm2bids helper function to look at your json files (associated with each of your nifti files - these will be in the tmp_dcm2bids folder).
 ```
-dcm2bids_helper /storage/shared/research/cinn/2020/gbgaba/raw/GBGABA_pilot2
+dcm2bids_helper -d /storage/shared/research/cinn/2020/gbgaba/raw/GBGABA_pilot2
 ```
 
 Next, make sure dcm2bids_config.json contains the following:
 ```
 {
     "descriptions": [
-	{
+        {
         "dataType": "anat",
         "modalityLabel": "T1w",
         "criteria": {
-	"ImageType":  ["ORIGINAL", "PRIMARY", "M", "NORM", "DIS2D"],
-	"SequenceName": "*tfl3d1_16ns*",
-	"SeriesDescription": "t1_mprage*"
-            }
+            "ImageType":  ["ORIGINAL", "PRIMARY", "M", "NORM", "DIS2D"],
+            "SequenceName": "*tfl3d1_16ns*",
+            "SeriesDescription": "t1_mprage*"
+                    }
         },
         {
         "dataType": "func",
         "modalityLabel": "bold",
         "customLabels": "task-rest",
         "criteria": {
-            "SeriesDescription": "*Resting_ep2d_bold*"
+            "SeriesDescription": "*cmrr_mbep2d_bold_HCP*"
             },
- 	"sidecarChanges": {
+        "sidecarChanges": {
                 "TaskName": "rest"
-		}
+            }
         },
         {
         "dataType": "fmap",
         "modalityLabel": "magnitude1",
         
         "criteria": {
-	"SeriesDescription": "gre_field_mapping_32ch", 		 "SidecarFilename": "*_e1.*"
+            "SeriesDescription": "gre_field_mapping_32ch", 
+            "SidecarFilename": "*_e1.*"
             },
         "intendedFor": 0
         },
-	{
-	"dataType": "fmap",
+        {
+        "dataType": "fmap",
         "modalityLabel": "magnitude2",
         
         "criteria": {
-	"SeriesDescription": "gre_field_mapping_32ch", 		 "SidecarFilename": "*_e2.*"
+            "SeriesDescription": "gre_field_mapping_32ch", 
+            "SidecarFilename": "*_e2.*"
             },
         "intendedFor": 0
         },
@@ -154,10 +156,61 @@ Next, make sure dcm2bids_config.json contains the following:
             "SidecarFilename": "*_e2_ph*"
             },
         "intendedFor": 0
+        },
+        {
+        "dataType": "anat",
+        "modalityLabel": "mp2rage",
+        "customLabels": "TI1_magnitude",
+        "criteria": {
+            "ProtocolName": "*mp2rage*",
+            "ImageType": ["ORIGINAL", "PRIMARY", "M", "ND", "NORM"],
+            "SeriesDescription": "*t1_mp2rage_sag_p3_iso_INV1*"
+            }
+        },
+        {
+        "dataType": "anat",
+        "modalityLabel": "mp2rage",
+        "customLabels": "TI2_magnitude",
+        "criteria": {
+            "ProtocolName": "*mp2rage*",
+            "ImageType": ["ORIGINAL", "PRIMARY", "M", "ND", "NORM"],
+            "SeriesDescription": "*t1_mp2rage_sag_p3_iso_INV2*"
+            }
+        },
+        {
+        "dataType": "anat",
+        "modalityLabel": "mp2rage",
+        "customLabels": "UNI",
+        "criteria": {
+            "ProtocolName": "*mp2rage*",
+            "ImageType": ["ORIGINAL", "PRIMARY", "M", "ND", "UNI"],
+            "SeriesDescription": "*t1_mp2rage_sag_p3_iso_UNI_Images*"
+            }
+        },
+        {
+        "dataType": "anat",
+        "modalityLabel": "mp2rage",
+        "customLabels": "TI1_phase",
+        "criteria": {
+            "ProtocolName": "*mp2rage*",
+            "ImageType": ["ORIGINAL", "PRIMARY", "P", "ND", "PHASE"],
+            "SeriesDescription": "*t1_mp2rage_sag_p3_iso_RR_RR_INV1*"
+            }
+        },
+        {
+        "dataType": "anat",
+        "modalityLabel": "mp2rage",
+        "customLabels": "TI2_phase",
+        "criteria": {
+            "ProtocolName": "*mp2rage*",
+            "ImageType": ["ORIGINAL", "PRIMARY", "P", "ND", "PHASE"],
+            "SeriesDescription": "*t1_mp2rage_sag_p3_iso_RR_RR_INV2*"
+            }
         }
-        
+
     ]
 }
+
 ```
 
 
@@ -169,7 +222,7 @@ Then type into terminal (within the conda environment):
 Alternatively, type:
 ```
 cd /storage/shared/research/cinn/2020/gbgaba
-dcm2bids -d /storage/shared/research/cinn/2020/gbgaba/raw/GBGABA_002/ -p 002 -c /storage/shared/research/cinn/2020/gbgaba/scripts/code/dcm2bids_config.json 
+dcm2bids -d /storage/shared/research/cinn/2020/gbgaba/raw/GBGABA_002/ -p 002 -s 01 -c /storage/shared/research/cinn/2020/gbgaba/scripts/code/dcm2bids_config.json 
 ```
 And Repeat for every subject
 
