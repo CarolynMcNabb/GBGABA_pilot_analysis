@@ -148,23 +148,17 @@ opts.fit.FWHMcoMM3              = 14;
 
 % Specify metabolite data
 % (MANDATORY)
-files       = {'/Volumes/gold/cinn/2020/gbgaba/pilot_BIDS/sub-002/ses-01/mrs/mega-press/meas_MID00067_FID48858_svs_edit_mgs_univ_MEGAPRESS.dat',...
-    '/Volumes/gold/cinn/2020/gbgaba/pilot_BIDS/sub-003/ses-01/mrs/mega-press/meas_MID00035_FID49050_svs_edit_mgs_univ_MEGAPRESS_STR.dat',...
-    '/Volumes/gold/cinn/2020/gbgaba/MRS_raw/GBGABA_pilot4/meas_MID00029_FID49112_svs_edit_mgs_univ_MEGAPRESS_STR.dat'};
+files       = {'/Volumes/gold/cinn/2020/gbgaba/pilot_BIDS/sub-004/ses-01/mrs/motorcortex/mega-press/meas_MID00047_FID49130_svs_edit_mgs_univ_MEGAPRESS_MC_SAT.dat'};
 
 % Specify water reference data for eddy-current correction (same sequence as metabolite data!)
 % (OPTIONAL)
 % Leave empty for GE P-files (.7) - these include water reference data by
 % default.
-files_ref   = {'/Volumes/gold/cinn/2020/gbgaba/pilot_BIDS/sub-002/ses-01/mrs/mega-press_ref/meas_MID00069_FID48860_svs_edit_mgs_univ_H2O.dat',...
-    '/Volumes/gold/cinn/2020/gbgaba/pilot_BIDS/sub-003/ses-01/mrs/mega-press_ref/meas_MID00043_FID49058_svs_edit_mgs_univ_H2O_STR.dat',...
-    '/Volumes/gold/cinn/2020/gbgaba/MRS_raw/GBGABA_pilot4/meas_MID00031_FID49114_svs_edit_mgs_univ_H2O_STR.dat'};
+files_ref   = {'/Volumes/gold/cinn/2020/gbgaba/pilot_BIDS/sub-004/ses-01/mrs/motorcortex/mega-press_ref/meas_MID00049_FID49132_svs_edit_mgs_univ_H2O_MC.dat'};
 % files_ref = {};
 % Specify water data for quantification (e.g. short-TE water scan)
 % (OPTIONAL)
-files_w     = {'/Volumes/gold/cinn/2020/gbgaba/pilot_BIDS/sub-002/ses-01/mrs/water/meas_MID00070_FID48861_svs_se_30_STR_H2O.dat',...
-    '/Volumes/gold/cinn/2020/gbgaba/pilot_BIDS/sub-003/ses-01/mrs/water/meas_MID00038_FID49053_svs_se_30_STR_H2O.dat',...
-    '/Volumes/gold/cinn/2020/gbgaba/MRS_raw/GBGABA_pilot4/meas_MID00032_FID49115_svs_se_30_STR_H2O.dat'};
+files_w     = {'/Volumes/gold/cinn/2020/gbgaba/pilot_BIDS/sub-004/ses-01/mrs/motorcortex/water/meas_MID00050_FID49133_svs_se_30_MC_H2O.dat'};
 % files_w = {};                 
            
 % Specify metabolite-nulled data for quantification
@@ -175,9 +169,7 @@ files_mm     = {};
 % (OPTIONAL)
 % Link to single NIfTI (*.nii) files for Siemens and Philips data
 % Link to DICOM (*.dcm) folders for GE data
-files_nii   = {'/Volumes/gold/cinn/2020/gbgaba/pilot_BIDS/sub-002/ses-01/anat/008_GBGABA_pilot2_t1_mprage_DC_sag_HCP_256_32ch_20210818135210.nii',...
-    '/Volumes/gold/cinn/2020/gbgaba/pilot_BIDS/sub-003/ses-01/anat/sub-003_ses-01_T1w.nii',...
-    '/Volumes/gold/cinn/2020/gbgaba/pilot_BIDS/sub-004/ses-01/anat/sub-004_ses-01_T1w.nii'};
+files_nii   = {'/Volumes/gold/cinn/2020/gbgaba/pilot_BIDS/sub-004/ses-01/anat/sub-004_ses-01_T1w.nii'};
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
@@ -191,6 +183,6 @@ files_nii   = {'/Volumes/gold/cinn/2020/gbgaba/pilot_BIDS/sub-002/ses-01/anat/00
 
 % Specify output folder
 % (MANDATORY)
-outputFolder = '/Volumes/gold/cinn/2020/gbgaba/pilot_BIDS/derivatives/Osprey/sub-002_and_003';
+outputFolder = '/Volumes/gold/cinn/2020/gbgaba/pilot_BIDS/derivatives/Osprey/sub-004MC';
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%

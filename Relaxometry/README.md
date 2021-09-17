@@ -1,4 +1,13 @@
-# Instructions for T1 Relaxometry using QUIT 
+# Relaxometry analysis for Gut Brain GABA pilot
+### Carolyn McNabb 2021
+
+## Merge magntitude and phase images using FSL
+In ubuntu terminal window, type:
+```
+1.0_merge.sh
+```
+
+## Instructions for T1 Relaxometry using QUIT 
 
 Quit toolbox is in: 
 ```
@@ -18,10 +27,13 @@ qi mp2rage --help
 
 Change directory into BIDS directory
 ```
-cd /Volumes/gold/cinn/2020/gbgaba/pilot_BIDS/sub-002/ses-01/anat
+cd /Volumes/gold/cinn/2020/gbgaba/pilot_BIDS/derivatives/quit/preprocessed/sub-003/ses-01
 ```
-Run the command:
+Run the following commands:
 
 ```
-qi mp2rage t1_map.nii.gz --out=/Volumes/gold/cinn/2020/gbgaba/pilot_BIDS/derivatives/quit/sub-002/ses-01/sub-002_ses-01_
+qicomplex -m ./sub-003_ses-01_mag.nii.gz -p ./sub-003_ses-01_phase.nii.gz -X ./sub-003_ses-01_mp2_x.nii
+
+qi mp2rage ./sub-003_ses-01_mp2_x.nii --json=/Volumes/GoogleDrive/My\ Drive/GitHub/GBGABA_pilot_analysis/Relaxometry/mp2rage.json --beta=5000
+
 ```

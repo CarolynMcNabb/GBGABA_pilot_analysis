@@ -1,0 +1,21 @@
+TRPrep is what Siemens have called TR, while the TR is what they have called echo-spacing. SegLength is the Turbo Factor, which is also the number of slices, and k0 is half of that because the reordering is "Linear".
+
+ 
+
+I don't have an example pipeline for this. It should be straightforward:
+
+ 
+
+fslmerge -t mag ti1_mag ti2_mag
+
+fslmerge -t pha ti1_pha ti2_pha
+
+qicomplex -m mag.nii.gz -p pha.nii.gz -X mp2_x.nii
+
+qi mp2rage mp2_x.nii --json=yourfile.json --beta=B
+
+ 
+
+You will need to empirically determine the right number for beta. You want a value that removes noise in the background of the output uni image, but does not re-introduce B1 inhomogeneity. Once you have a good number it should work across all subjects.
+
+Should be able to turn this into a python or bash script for ease of use.
