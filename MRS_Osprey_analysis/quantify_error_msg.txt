@@ -1,0 +1,16 @@
+Timestamp September 24, 2021 11:37:57 Osprey 1.1.0  OspreyQuantify
+
+Quantifying dataset   1 out of   1 total datasets...
+Unable to perform assignment because the size of the left side is 1-by-1 and the size of the right side is 0-by-1.
+
+Error in OspreyQuantify>quantAlpha (line 775)
+    AlphaCorrWaterScaled(2,:) = ConcIU_TissCorr_Harris ./ (fGM + alpha*fWM);
+
+Error in OspreyQuantify (line 298)
+        [AlphaCorrWaterScaled, AlphaCorrWaterScaledGroupNormed] = quantAlpha(metsName,amplMets, amplWater,getResults, metsTR, waterTR, metsTE, waterTE, fGM, fWM,
+        fCSF, meanfGM, meanfWM,MRSCont.opts.fit.coMM3,Bo);
+
+Error in osp_onQuant (line 33)
+    MRSCont = OspreyQuantify(MRSCont);
+ 
+Error while evaluating UIControl Callback.

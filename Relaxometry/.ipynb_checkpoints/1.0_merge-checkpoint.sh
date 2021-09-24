@@ -23,11 +23,14 @@ for sub in ${!subjects[@]}; do
         echo "Merging magnitude files for ${i} ${ses}"
         
         fslmerge -t ${derivative_path}/${i}/${ses}/${i}_${ses}_mag ${bids_path}/${i}/${ses}/anat/${i}_${ses}_TI1_magnitude_mp2rage.nii.gz ${bids_path}/${i}/${ses}/anat/${i}_${ses}_TI2_magnitude_mp2rage.nii.gz
-        
+              
         echo "Merging phase files for ${i} ${ses}"
         
         fslmerge -t ${derivative_path}/${i}/${ses}/${i}_${ses}_phase ${bids_path}/${i}/${ses}/anat/${i}_${ses}_TI1_phase_mp2rage.nii.gz ${bids_path}/${i}/${ses}/anat/${i}_${ses}_TI2_phase_mp2rage.nii.gz
 
-
+        echo "Converting phase images to radians for ${i} ${ses}"
+        
+        fslmaths ${derivative_path}/${i}/${ses}/${i}_${ses}_phase -div 4096 -mul 3.141592653 ${derivative_path}/${i}/${ses}/${i}_${ses}_phase_rad
+        
     done
 done

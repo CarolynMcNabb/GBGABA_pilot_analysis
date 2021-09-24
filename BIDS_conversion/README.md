@@ -183,7 +183,7 @@ Next, make sure dcm2bids_config.json contains the following:
         "customLabels": "UNI",
         "criteria": {
             "ProtocolName": "*mp2rage*",
-            "ImageType": ["ORIGINAL", "PRIMARY", "M", "ND", "UNI"],
+            "ImageType": ["DERIVED", "PRIMARY", "M", "ND", "UNI"],
             "SeriesDescription": "*t1_mp2rage_sag_p3_iso_UNI_Images*"
             }
         },

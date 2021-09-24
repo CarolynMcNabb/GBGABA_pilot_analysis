@@ -32,9 +32,8 @@ cd /Volumes/gold/cinn/2020/gbgaba/pilot_BIDS/derivatives/quit/preprocessed/sub-0
 Run the following commands:
 
 ```
-qi complex -m ./sub-003_ses-01_mag.nii.gz -p ./sub-003_ses-01_phase.nii.gz -X ./sub-003_ses-01_mp2_x.nii
+qi complex -m ./sub-003_ses-01_mag.nii.gz -p ./sub-003_ses-01_phase_rad.nii.gz -X ./sub-003_ses-01_mp2_x.nii
 
-#note that beta=10000000 works okay for UNI but not T1
-qi mp2rage ./sub-003_ses-01_mp2_x.nii --json=/Volumes/GoogleDrive/My\ Drive/GitHub/GBGABA_pilot_analysis/Relaxometry/mp2rage.json --beta=10000000
+qi mp2rage ./sub-003_ses-01_mp2_x.nii --json=/Volumes/GoogleDrive/My\ Drive/GitHub/GBGABA_pilot_analysis/Relaxometry/mp2rage.json --beta=10000
 
 ```
