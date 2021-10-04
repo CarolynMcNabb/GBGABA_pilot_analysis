@@ -135,7 +135,7 @@ opts.fit.bLineKnotSpace     = 0.55;              % [ppm] Default: 0.4.
 opts.fit.fitMM              = 1;                % OPTIONS:    - 0 (no)
                                                 %             - 1 (yes, default)
                                                 
-opts.fit.coMM3              = '3to2MMhard';
+opts.fit.coMM3              = '3to2MM';
 opts.fit.FWHMcoMM3              = 14;                                                
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
