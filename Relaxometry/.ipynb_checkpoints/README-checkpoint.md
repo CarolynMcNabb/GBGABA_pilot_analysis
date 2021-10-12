@@ -8,6 +8,7 @@ In ubuntu terminal window, type:
 ```
 
 ## Instructions for T1 Relaxometry using QUIT 
+### The following commands were run on MacOS Big Sur version 11.6 
 
 Quit toolbox is in: 
 ```
@@ -18,6 +19,8 @@ Open a bash terminal (macos terminal is fine) and modify path
 ```
 PATH=$PATH:/Volumes/GoogleDrive/My\ Drive/Software/
 export PATH
+PATH=$PATH:/Volumes/GoogleDrive/My\ Drive/GitHub/GBGABA_pilot_analysis/Relaxometry
+export PATH
 ```
 
 Test QUIT toolbox is working by typing:
@@ -25,15 +28,10 @@ Test QUIT toolbox is working by typing:
 qi mp2rage --help
 ```
 
-Change directory into BIDS directory
+Create complex file and T1 image.
+In the bash terminal (macos), type:
 ```
-cd /Volumes/gold/cinn/2020/gbgaba/pilot_BIDS/derivatives/quit/preprocessed/sub-003/ses-01
+1.1_quit.sh
 ```
-Run the following commands:
 
-```
-qi complex -m ./sub-003_ses-01_mag.nii.gz -p ./sub-003_ses-01_phase_rad.nii.gz -X ./sub-003_ses-01_mp2_x.nii
 
-qi mp2rage ./sub-003_ses-01_mp2_x.nii --json=/Volumes/GoogleDrive/My\ Drive/GitHub/GBGABA_pilot_analysis/Relaxometry/mp2rage.json --beta=10000
-
-```

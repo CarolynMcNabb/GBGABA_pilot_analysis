@@ -129,6 +129,17 @@ Next, make sure dcm2bids_config.json contains the following:
             }
         },
         {
+        "dataType": "func",
+        "modalityLabel": "sbref",
+        "customLabels": "task-rest",
+        "criteria": {
+            "SeriesDescription": "*cmrr_mbep2d_bold_SB*"
+            },
+        "sidecarChanges": {
+                "TaskName": "rest"
+            }
+        },
+        {
         "dataType": "fmap",
         "modalityLabel": "magnitude1",
         
@@ -194,7 +205,7 @@ Next, make sure dcm2bids_config.json contains the following:
         "criteria": {
             "ProtocolName": "*mp2rage*",
             "ImageType": ["ORIGINAL", "PRIMARY", "P", "ND", "PHASE"],
-            "SeriesDescription": "*t1_mp2rage_sag_p3_iso_RR_RR_INV1*"
+            "SeriesDescription": "*t1_mp2rage_sag_p3_iso_RR_INV1*"
             }
         },
         {
@@ -204,7 +215,7 @@ Next, make sure dcm2bids_config.json contains the following:
         "criteria": {
             "ProtocolName": "*mp2rage*",
             "ImageType": ["ORIGINAL", "PRIMARY", "P", "ND", "PHASE"],
-            "SeriesDescription": "*t1_mp2rage_sag_p3_iso_RR_RR_INV2*"
+            "SeriesDescription": "*t1_mp2rage_sag_p3_iso_RR_INV2*"
             }
         }
 
