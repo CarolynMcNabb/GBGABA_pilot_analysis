@@ -214,7 +214,7 @@ set fmri(bgimage) 1
 set fmri(tsplot_yn) 1
 
 # Registration to initial structural
-set fmri(reginitial_highres_yn) 0
+set fmri(reginitial_highres_yn) 1
 
 # Search space for registration to initial structural
 # 0   : No search
@@ -265,7 +265,7 @@ set fmri(regstandard_nonlinear_warpres) 10
 set fmri(paradigm_hp) 100
 
 # Total voxels
-set fmri(totalVoxels) 633484800
+set fmri(totalVoxels) 422323200
 
 
 # Number of lower-level copes feeding into higher-level analysis
@@ -282,6 +282,9 @@ set unwarp_files(1) "/storage/shared/research/cinn/2020/gbgaba/pilot_BIDS/deriva
 
 # B0 unwarp mag input image for analysis 1
 set unwarp_files_mag(1) "/storage/shared/research/cinn/2020/gbgaba/pilot_BIDS/derivatives/fMRI/preprocessed/sub-ID/ses-ID/fmap/sub-ID_ses-ID_magnitude1_brain"
+
+# Session's structural image for analysis 1
+set initial_highres_files(1) "/storage/gold/cinn/2020/gbgaba/pilot_BIDS/sub-ID/ses-ID/func/sub-ID_ses-ID_task-rest_sbref"
 
 # Subject's structural image for analysis 1
 set highres_files(1) "/storage/shared/research/cinn/2020/gbgaba/pilot_BIDS/derivatives/fMRI/preprocessed/sub-ID/ses-ID/anat/sub-ID_ses-ID_T1w_brain"
