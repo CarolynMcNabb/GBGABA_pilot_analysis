@@ -7,7 +7,7 @@
 module load fsl6.0 #load fsl - if you are using a machine other than the virtual machine at University of Reading, you can comment out this line.
 
 bids_path=/storage/shared/research/cinn/2020/gbgaba/pilot_BIDS
-derivative_path=${bids_path}/derivatives/quit/preprocessed
+derivative_path=${bids_path}/derivatives/relaxometry/preprocessed
 
 cd $bids_path
 subjects=( $(ls -d sub-* )) 

@@ -135,7 +135,7 @@ opts.fit.bLineKnotSpace     = 0.55;              % [ppm] Default: 0.4.
 opts.fit.fitMM              = 1;                % OPTIONS:    - 0 (no)
                                                 %             - 1 (yes, default)
                                                 
-opts.fit.coMM3              = '3to2MMhard';
+opts.fit.coMM3              = '3to2MM';
 opts.fit.FWHMcoMM3              = 14;                                                
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
@@ -148,17 +148,17 @@ opts.fit.FWHMcoMM3              = 14;
 
 % Specify metabolite data
 % (MANDATORY)
-files       = {'/Volumes/gold/cinn/2020/gbgaba/pilot_BIDS/sub-002/ses-01/mrs/mega-press/meas_MID00067_FID48858_svs_edit_mgs_univ_MEGAPRESS.dat'};
+files       = {'/Volumes/gold/cinn/2020/gbgaba/pilot_BIDS/sub-005/ses-01/mrs/motorcortex/mega-press/meas_MID00050_FID49449_svs_edit_mgs_univ_MEGAPRESS_MC_SAT.dat'};
 
 % Specify water reference data for eddy-current correction (same sequence as metabolite data!)
 % (OPTIONAL)
 % Leave empty for GE P-files (.7) - these include water reference data by
 % default.
-files_ref   = {'/Volumes/gold/cinn/2020/gbgaba/pilot_BIDS/sub-002/ses-01/mrs/mega-press_ref/meas_MID00069_FID48860_svs_edit_mgs_univ_H2O.dat'};
+files_ref   = {'/Volumes/gold/cinn/2020/gbgaba/pilot_BIDS/sub-005/ses-01/mrs/motorcortex/mega-press_ref/meas_MID00052_FID49451_svs_edit_mgs_univ_H2O_MC.dat'};
 % files_ref = {};
 % Specify water data for quantification (e.g. short-TE water scan)
 % (OPTIONAL)
-files_w     = {'/Volumes/gold/cinn/2020/gbgaba/pilot_BIDS/sub-002/ses-01/mrs/water/meas_MID00070_FID48861_svs_se_30_STR_H2O.dat'};
+files_w     = {'/Volumes/gold/cinn/2020/gbgaba/pilot_BIDS/sub-005/ses-01/mrs/motorcortex/water/meas_MID00053_FID49452_svs_se_30_MC_H2O.dat'};
 % files_w = {};                 
            
 % Specify metabolite-nulled data for quantification
@@ -169,7 +169,7 @@ files_mm     = {};
 % (OPTIONAL)
 % Link to single NIfTI (*.nii) files for Siemens and Philips data
 % Link to DICOM (*.dcm) folders for GE data
-files_nii   = {'/Volumes/gold/cinn/2020/gbgaba/pilot_BIDS/sub-002/ses-01/anat/008_GBGABA_pilot2_t1_mprage_DC_sag_HCP_256_32ch_20210818135210.nii'};
+files_nii   = {'/Volumes/gold/cinn/2020/gbgaba/pilot_BIDS/sub-005/ses-01/anat/sub-005_ses-01_T1w.nii'};
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
@@ -183,6 +183,6 @@ files_nii   = {'/Volumes/gold/cinn/2020/gbgaba/pilot_BIDS/sub-002/ses-01/anat/00
 
 % Specify output folder
 % (MANDATORY)
-outputFolder = '/Volumes/gold/cinn/2020/gbgaba/pilot_BIDS/derivatives/MRS/sub-002';
+outputFolder = '/Volumes/gold/cinn/2020/gbgaba/pilot_BIDS/derivatives/Osprey/sub-005MC';
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%

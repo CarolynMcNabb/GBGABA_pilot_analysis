@@ -6,7 +6,7 @@
 
 
 bids_path=/Volumes/gold/cinn/2020/gbgaba/pilot_BIDS
-derivative_path=${bids_path}/derivatives/quit/preprocessed
+derivative_path=${bids_path}/derivatives/relaxometry/preprocessed
 json_path=/Volumes/gold/cinn/2020/gbgaba/scripts/code
 
 cd $bids_path
