@@ -27,7 +27,8 @@ If brain extraction was unsuitable (you can check which subjects you were unhapp
 
 3.4. Perform additional motion correction with FIX 
 
------
+----- 
+# the following are from the gutmic study - still to be sorted for the gbgaba study but you will be able to modify these scripts
 
 3.5. Warp functional data from subject space into standard space. In Ubuntu terminal window, type:
 ```

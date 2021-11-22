@@ -1,0 +1,32 @@
+#Carolyn McNabb 
+#November 2021
+#GBGABA BRAIN DATA PILOT ANALYSIS 
+#1.3_mask_t1.sh will mask the t1 and UNI images (output from quit) using the mask created by HD-BET
+#!/bin/bash
+
+
+bids_path=/storage/shared/research/cinn/2020/gbgaba/pilot_BIDS
+derivative_path=${bids_path}/derivatives/relaxometry/preprocessed
+
+cd $bids_path
+subjects=( $(ls -d sub-* )) 
+
+for sub in ${!subjects[@]}; do 
+    i=${subjects[$sub]}
+    s=${i//$"sub-"/}
+    
+    cd ${bids_path}/${i}
+    sessions=( $(ls -d ses-*))
+    for ses in ${sessions}; do
+        if [ -e ${derivative_path}/${i}/${ses}/MP2_T1.nii.gz ]; then
+            
+            echo "Masking t1 and UNI images for ${i} ${ses} - outputs are ${i}_${ses}_MP2_T1_brain.nii.gz and ${i}_${ses}_MP2_UNI_brain.nii.gz "
+        
+            fslmaths ${derivative_path}/${i}/${ses}/MP2_T1.nii.gz -mul ${derivative_path}/${i}/${ses}/${i}_${ses}_mask.nii.gz ${derivative_path}/${i}/${ses}/${i}_${ses}_MP2_T1_brain.nii.gz
+        
+            fslmaths ${derivative_path}/${i}/${ses}/MP2_UNI.nii.gz -mul ${derivative_path}/${i}/${ses}/${i}_${ses}_mask.nii.gz ${derivative_path}/${i}/${ses}/${i}_${ses}_MP2_UNI_brain.nii.gz
+        else
+            echo "MP2_T1 file does not exist for ${i} ${ses}"
+        fi
+    done
+done
