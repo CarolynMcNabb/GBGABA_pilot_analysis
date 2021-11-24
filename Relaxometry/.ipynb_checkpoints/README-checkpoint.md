@@ -51,6 +51,7 @@ In the bash terminal (macos), type:
 
 ## 1.2. Create MP2RAGE brain mask using HD-BET 
 HD-BET is available [here](https://github.com/MIC-DKFZ/HD-BET)
+
 Theoretically this should work on the VM but I have had trouble installing it. It works on MacOS for now but I had to add the -device cpu to do this. This can be removed if used on the VM.
 Make sure you have installed HD-BET before running this script (follow the README instructions on their github page).
 In MacOS terminal, type:
@@ -65,11 +66,34 @@ This step should be conducted using the VM (Ubuntu). In the Ubuntu terminal, typ
 1.3_mask_t1.sh
 ```
 
+#### Now the data are ready for co-registraton and segmentation 
+
+## 1.4. Create a group template based on GBGABA participants' data using ANTs 
+Recommendation is to use about 10 participants' data to create the group template (allegedly, adding more than this doesn't actually improve the template but feel free to try!)
+
+This step uses antsMultivariateTemplateConstruction.sh (N.B. I read a thread where this version performs better than antsMultivariateTemplateConstruction2.sh and so am going with the older version for now) - this can be reviewed later. 
+
+#### Before running this step, you need to select 10 good looking T1 images that you want to use to create the template. All images to be added to the template should be in the same directory, and this script should be invoked from that directory.
+In the ubuntu terminal, type:
+```
+1.4.0_mkdir_template.sh
+```
+
+### To do: This can be run using SLURM on the cluster [-c 5] 
+
+```
+antsMultivariateTemplateConstruction.sh -d 3 -a 1 -m 30x50x20 -t GR -s CC -c 0 -o group_template 
+```
+
+
+
+
 
 ---
 ## 1.4. Co-registration and segmentation using Nighres/ANTs 
 ### Some initial set-up stuff that only needs to be done once
 The Neuroimaging at high resolution ([Nighres](https://nighres.readthedocs.io/en/latest/index.html)) package can be cloned from Gihub using the following [link](https://github.com/nighres/nighres)
+
 In the ubuntu terminal window in a Vanilla Fat VM, type:
 ```
 cd /storage/shared/research/cinn/2020/gbgaba/scripts

@@ -19,6 +19,7 @@ for sub in ${!subjects[@]}; do
     
     cd ${bids_path}/${i}
     sessions=( $(ls -d ses-*))
+    
     for ses in ${sessions}; do
         if [ -e ${derivative_path}/${i}/${ses}/MP2_UNI.nii.gz ]; then
         

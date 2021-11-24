@@ -18,6 +18,7 @@ for sub in ${!subjects[@]}; do
     cd ${bids_path}/${i}
     sessions=( $(ls -d ses-*))
     for ses in ${sessions}; do
+    
         if [ -e ${derivative_path}/${i}/${ses}/MP2_T1.nii.gz ]; then
             
             echo "Masking t1 and UNI images for ${i} ${ses} - outputs are ${i}_${ses}_MP2_T1_brain.nii.gz and ${i}_${ses}_MP2_UNI_brain.nii.gz "
