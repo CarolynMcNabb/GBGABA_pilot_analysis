@@ -81,8 +81,11 @@ In the ubuntu terminal, type:
 
 ### To do: This can be run using SLURM on the cluster [-c 5] 
 
+In the Vanilla VM, load ANTs module and run antsMultivariateTemplateConstruction.sh - Note, this takes ages without SLURM.
 ```
-antsMultivariateTemplateConstruction.sh -d 3 -a 1 -m 30x50x20 -t GR -s CC -c 0 -o group_template 
+module load ANTs/ITKv4
+cd /storage/shared/research/cinn/2020/gbgaba/pilot_BIDs/derivatives/relaxometry/preprocessed/template
+antsMultivariateTemplateConstruction.sh -d 3 -a 1 -m 30x50x20 -t GR -s CC -c 0 -o group_template ./*.nii.gz
 ```
 
 
