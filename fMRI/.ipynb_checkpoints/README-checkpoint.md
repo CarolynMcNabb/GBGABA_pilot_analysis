@@ -26,7 +26,24 @@ If brain extraction was unsuitable (you can check which subjects you were unhapp
 ```
 
 3.4. Perform additional motion correction with FIX 
-
+FIX issues (FSL’s ICA-based noise removal)
+ 
+When using FIX, you first need to update the path to the Matlab folder in your bash profile so that FIX can find it.
+ 
+Type:
+```
+gedit ~/.bash_profile
+```
+In your bash profile add a line:
+``` 
+export FSL_FIX_MATLAB_ROOT="/usr/local/MATLAB/R2017b"
+```
+save your bash profile
+ 
+open a new terminal
+``` 
+module load fix1.065
+``` 
 ----- 
 # the following are from the gutmic study - still to be sorted for the gbgaba study but you will be able to modify these scripts
 

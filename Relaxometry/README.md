@@ -83,55 +83,18 @@ In the ubuntu terminal, type:
 
 In the Vanilla VM, load ANTs module and run antsMultivariateTemplateConstruction.sh - Note, this takes ages without SLURM.
 ```
-module load ANTs/ITKv4
-cd /storage/shared/research/cinn/2020/gbgaba/pilot_BIDs/derivatives/relaxometry/preprocessed/template
-antsMultivariateTemplateConstruction.sh -d 3 -a 1 -m 30x50x20 -t GR -s CC -c 0 -o group_template ./*.nii.gz
+1.4.1_construct_template.sh
 ```
 
+Now register the group template to MNI space - standard MNI data are in the gbgaba/standard directory
+```
+1.4.2_template2mni.sh
+```
 
-
-
+## 1.5. Register and transform all subject data to MNI space
+```
+1.5_reg_and_transform.sh
+antsRegistrationSyN then antsApplyTransforms
+```
 
 ---
-## 1.4. Co-registration and segmentation using Nighres/ANTs 
-### Some initial set-up stuff that only needs to be done once
-The Neuroimaging at high resolution ([Nighres](https://nighres.readthedocs.io/en/latest/index.html)) package can be cloned from Gihub using the following [link](https://github.com/nighres/nighres)
-
-In the ubuntu terminal window in a Vanilla Fat VM, type:
-```
-cd /storage/shared/research/cinn/2020/gbgaba/scripts
-git clone https://github.com/nighres/nighres
-module load anaconda
-```
-
-Build Nighres (instructions [here](https://nighres.readthedocs.io/en/latest/installation.html))
-Make sure you have Java JDK and JCC installed and set up. You will likely need to point the JCC_JDK variable to your Java JDK installation
-```
-sudo apt-get install openjdk-8-jdk
-export JCC_JDK=/usr/lib/jvm/java-8-openjdk-amd64
-python3 -m pip install jcc
-```
-
-**Got a warning - WARNING: pip is configured with locations that require TLS/SSL, however the ssl module in Python is not available. WARNING: Keyring is skipped due to an exception: Failed to unlock the collection!**
-
-Navigate to the Nighres directory you downloaded and unpacked, and run the build script:
-```
-cd nighres
-./build.sh
-```
-
-Now install the python package
-```
-python3 -m pip install .
-```
-
-Test the installation to see if it worked
-```
-cd /storage/shared/research/cinn/2020/gbgaba/
-python3 -c "import nighres"
-cd /storage/shared/research/cinn/2020/gbgaba/scripts/nighres/examples
-python3 example_01_tissue_classification.py
-```
-
-some debugging required: see https://stackoverflow.com/questions/40372537/cannot-mix-incompatible-qt-library-version-0x50501-with-this-library-version 
-Etienne had to update QT library on my VM
