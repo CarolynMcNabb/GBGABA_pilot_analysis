@@ -19,4 +19,4 @@ dim=3 #image dimensions
 
 cd ${template_path}
 
-antsRegistrationSyN.sh -d ${dim} -f ${template_path}/group_template_template0.nii.gz -m ${mni_path}/MNI152_T1_brain.nii.gz -o ${template_path}/group_template_in_MNI
+antsRegistrationSyN.sh -d ${dim} -f ${template_path}/group_template_template0.nii.gz -m ${mni_path}/MNI152_T1_1mm_brain.nii.gz -o ${template_path}/group_template_in_MNI

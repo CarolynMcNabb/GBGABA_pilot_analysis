@@ -1,4 +1,4 @@
-# GBGABA PILOT ANALYSIS
+# GBGABA PILOT ANALYSIS for resting-state fMRI
 Carolyn McNabb
 
 
@@ -6,7 +6,8 @@ Carolyn McNabb
 Uses FSL 6.0.1 on an ubuntu MATE 16.04 operating system (8GB). 
 
 
-3.1 perform brain extraction of T1w scan for each participant using FSL's bet function. In the Ubuntu terminal, type:
+## 3.1 perform brain extraction of T1w scan for each participant using FSL's bet function. 
+In the Ubuntu terminal, type:
 ```
 3.1_brainextraction.sh
 ```
@@ -15,22 +16,41 @@ If brain extraction was unsuitable (you can check which subjects you were unhapp
 3.1.1_betcleanup.sh
 ```
 
-3.2. Create a B0 fieldmap for bias field correction during registration in FEAT. In the Ubuntu terminal, type:
+## 3.2. Create a B0 fieldmap for bias field correction during registration in FEAT. 
+In the Ubuntu terminal, type:
 ```
 3.2_fieldmap.sh
 ```
 
-3.3. Run the first FEAT step (FEATpreproc) to produce independent components that will be used for motion correction. For this step, you need to have put the FEATpreproc.fsf file in a folder that you can access and amend the path to that folder in the 3.3_FEATpreproc.sh script. After doing that, in the Ubuntu terminal, type:
+## 3.3. Run the first FEAT step (FEATpreproc) to produce independent components that will be used for motion correction. 
+For this step, you need to have put the FEATpreproc.fsf file in a folder that you can access and amend the path to that folder in the 3.3_FEATpreproc.sh script. After doing that, in the Ubuntu terminal, type:
 ```
 3.3_FEATpreproc.sh
 ```
+### CHECK FEAT OUTPUT BEFORE PROCEEDING – 
+```
+firefox /storage/shared/research/cinn/2020/gbgaba/pilot_BIDS/derivatives/fMRI/preprocessed/sub-008/ses-01/func/sub-008_ses-01_FEATpreproc.feat/report.html
+```
+#### Exclude any participant whose motion parameters excede:
+Absolute motion >1.5 mm<br/>
+Root mean square relative motion > 0.2 mm
 
-3.4. Perform additional motion correction with FIX 
-FIX issues (FSL’s ICA-based noise removal)
- 
+
+#### Also assess whether registration is acceptable - if it is terrible, try going back to struct_brain and removing any non-brain that is still included. If still terrible then exclude the participant.
+
+For the first 10 participants, make a note of the melodic components that are noise and create a text document for each participant called hand_labels_noise.txt in the feat directory. It should be a single line like this [1, 3, 5, 8, 9] – counting starts at one not zero (note that the square brackets, and use of commas, is required). Classification of noisey components can be done in fsleyes using the command below to view…
+
+```
+cd /storage/shared/research/cinn/2020/gbgaba/pilot_BIDS/derivatives/fMRI/preprocessed/sub-008/ses-01/func/sub-008_ses-01_FEATpreproc.feat/
+fsleyes --scene melodic -ad filtered_func_data.ica &
+```
+*If you need some help classifying components, check out this paper by [Griffanti et al., 2017](https://www.sciencedirect.com/science/article/pii/S1053811916307583)*
+
+## 3.4. Perform additional motion correction with FIX ([FSL’s ICA-based noise removal](https://fsl.fmrib.ox.ac.uk/fsl/fslwiki/FIX))
+
 When using FIX, you first need to update the path to the Matlab folder in your bash profile so that FIX can find it.
  
-Type:
+In the terminal, type:
 ```
 gedit ~/.bash_profile
 ```
@@ -38,29 +58,80 @@ In your bash profile add a line:
 ``` 
 export FSL_FIX_MATLAB_ROOT="/usr/local/MATLAB/R2017b"
 ```
-save your bash profile
+Save your bash profile
  
-open a new terminal
+Open a new terminal and type:
 ``` 
 module load fix1.065
 ``` 
------ 
-# the following are from the gutmic study - still to be sorted for the gbgaba study but you will be able to modify these scripts
 
-3.5. Warp functional data from subject space into standard space. In Ubuntu terminal window, type:
+Once you have created ‘hand_labels_noise.txt’ for ten participants, you can train the fix classifier and create the fixtraining.rdata file. The –l option runs a leave-one-out cross validation so you can check the accuracy of your model. Assuming you are using the first 10 participants in the cohort to train your model, type the following in the Ubuntu terminal (changing the path obviously):
+```
+cd /storage/shared/research/cinn/2020/gbgaba/pilot_BIDS/derivatives/fMRI/preprocessed
+
+fix –t ./FIX –l ./sub-001/ses-01/func/sub-001_ses-01_FEATpreproc.feat/ ./sub-002/ses-01/func/sub-002_ses-01_FEATpreproc.feat/ ./sub-003/ses-01/func/sub-003_ses-01_FEATpreproc.feat/ ./sub-004/ses-01/func/sub-004_ses-01_FEATpreproc.feat/ ./sub-005/ses-01/func/sub-005_ses-01_FEATpreproc.feat/ ./sub-006/ses-01/func/sub-006_ses-01_FEATpreproc.feat/ ./sub-007/ses-01/func/sub-007_ses-01_FEATpreproc.feat/ ./sub-008/ses-01/func/sub-008_ses-01_FEATpreproc.feat/ ./sub-009/ses-01/func/sub-009_ses-01_FEATpreproc.feat/ ./sub-010/ses-01/func/sub-010_ses-01_FEATpreproc.feat/
+```
+
+FIX classifier output will look like this:
+
+output: set of thresholds is: 1   2   5  10  20  30  40  50<br/>
+[TPR,TNR,(3*TPR+TNR)/4] pairs of results (averaged over datasets, one pair per threshold):
+
+mean<br/>
+97.6 97.2 97.2 96.9 95.9 95.2 93.4 92.6<br/>
+57.9 62.7 71.5 79.7 89.9 94.6 96.8 97.9<br/>
+87.6 88.6 90.8 92.6 94.4 95.0 94.2 94.0<br/>
+
+median<br/>
+100.0 100.0 100.0 100.0  98.2  96.2  95.9  92.9<br/>
+63.2 70.9 79.4 84.7 92.4 95.5 97.2 98.4<br/>
+89.4 90.2 92.0 94.2 95.4 95.9 95.8 94.3<br/>
+
+You will need to select the best threshold based on the selectivity and specificity defined in the table. For the above example, a threshold of 30 gives the best accuracy
+
+Now prepare all subject folders for FIX, using the following command:
+```
+3.4.1_fix_stage1.sh
+```
+
+Subject data are now ready for cleaning. From the FIX classifier output (mentioned above), select an appropriate threshold and edit the following script before running
+```
+3.4.2_fix_stage2.sh
+```
+
+Now run third FIX stage - you also need to edit this script with the new threshold before continuing.
+```
+3.4.3_fix_stage3.sh
+```
+
+Because the next steps will look for (and use) the filtered_func_data, the following script will create a symbolic link to the filtered_func_data_clean file and rename the original filtered_func_data as filtered_func_pre_fix. This step is really important so don't forget to do it!
+```
+3.4.4_symlink.sh
+```
+
+
+
+## 3.5. Warp functional data from subject space into standard space. 
+In Ubuntu terminal window, type:
 ```
 3.5_warp2std.sh
 ```
 
-3.6. Smooth the functional data (now in standard space) using a 5 mm Gausian kernel and then downsample to 2mm (currently in 1mm space) to increase speed of MELODIC. In ubuntu terminal, type:
+## 3.6. Smooth data and prepare GLM
+Smooth the functional data (now in standard space) using a 5 mm Gausian kernel and then downsample to 2mm (currently in 1mm space) to increase speed of MELODIC. In ubuntu terminal, type:
 ```
 3.6_smoothdownsample.sh
 ```
-In addition, create a GLM containing the faecal GABA, Glutamate and Glutamine levels from LCMS. In R, run the following script:
+
+In addition, create a GLM containing the faecal GABA, Glutamate and Glutamine levels from LCMS. Note that you may want to change the way this GLM is set up depending on your question. Take a look at the GLM instructions [here](https://fsl.fmrib.ox.ac.uk/fsl/fslwiki/GLM) to get a better idea of how to organise your GLM.
+In R, run the following script:
 ```
 3.6_GLMSetup.R
 ```
-After doing this, open the GLM gui in FSL. In the ubuntu terminal, type:
+After doing this, open the GLM gui in FSL. We will create two GLMs, one for the F tests (which we will evaluate using FSL's [Randomise](https://fsl.fmrib.ox.ac.uk/fsl/fslwiki/Randomise)) and one for the t tests (which we will evaluate using FSL's [dual regression](https://fsl.fmrib.ox.ac.uk/fsl/fslwiki/DualRegression)). The reason for including both is that you should look at the outcomes of your F tests to see if they are statistically significant, before you go on to look at the dual regression output. This will also allow you to be smarter with your corrections for multiple comparisons.
+
+
+In the ubuntu terminal, type:
 ```
 Glm
 ```
@@ -85,7 +156,7 @@ In General Linear Model window:
 1. Enter the following names for the EVs:
     "age","hand","GABA","Glutamate", "Glutamine"
 1. Click on "Contrasts & F-tests" tab
-1. Change number of "Contrasts" to 6
+1. Change number of "Contrasts" to 3
 1. Change number of F tests to 3
 1. Contrasts should be set up as follows:
 <table>
@@ -101,7 +172,7 @@ In General Linear Model window:
       <td>F3</td>
 
   <tr>
-      <td>GABA+</td>
+      <td>GABA</td>
       <td>0</td>
       <td>0</td>
       <td>1</td>
@@ -110,6 +181,56 @@ In General Linear Model window:
       <td>🟨</td>
       <td></td>
       <td></td>
+   </tr>
+  <tr>
+      <td>Glutamate</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>1</td>
+      <td>0</td>
+      <td></td>
+      <td>🟨</td>
+      <td></td>
+   </tr>
+     <tr>
+      <td>Glutamine</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>1</td>
+      <td></td>
+      <td></td>
+      <td>🟨</td>
+   </tr>
+</table>
+
+1. Save as "ICA_LCMS_Ftest" in "/storage/shared/research/cinn/2020/gbgaba/scripts/GLMs"
+           
+### Now repeat for t tests
+           
+In General Linear Model window:
+1. Click on "Contrasts & F-tests" tab
+1. Change number of "Contrasts" to 6
+1. Change number of F tests to 0
+1. Contrasts should be set up as follows:
+<table>
+  <tr>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+
+  <tr>
+      <td>GABA+</td>
+      <td>0</td>
+      <td>0</td>
+      <td>1</td>
+      <td>0</td>
+      <td>0</td>
    </tr>
    <tr>
        <td>GABA-</td>
@@ -118,10 +239,7 @@ In General Linear Model window:
        <td>-1</td>
        <td>0</td>
        <td>0</td>
-      <td></td>
-      <td></td>
-      <td></td>
-   </tr>
+    </tr>
   <tr>
       <td>Glutamate+</td>
       <td>0</td>
@@ -129,9 +247,6 @@ In General Linear Model window:
       <td>0</td>
       <td>1</td>
       <td>0</td>
-      <td></td>
-      <td>🟨</td>
-      <td></td>
    </tr>
    <tr>
        <td>Glutamate-</td>
@@ -140,9 +255,6 @@ In General Linear Model window:
        <td>0</td>
        <td>-1</td>
        <td>0</td>
-       <td></td>
-      <td></td>
-      <td></td>
    </tr>
      <tr>
       <td>Glutamine+</td>
@@ -151,9 +263,6 @@ In General Linear Model window:
       <td>0</td>
       <td>0</td>
       <td>1</td>
-      <td></td>
-      <td></td>
-      <td>🟨</td>
    </tr>
    <tr>
        <td>Glutamine-</td>
@@ -162,13 +271,11 @@ In General Linear Model window:
        <td>0</td>
        <td>0</td>
        <td>-1</td>
-       <td></td>
-      <td></td>
-      <td></td>
    </tr>
 </table>
 
-1. Save as "ICA_LCMS" in "/storage/shared/research/cinn/2018/GUTMIC/CM_scripts/GLMs"
+1. Save as "ICA_LCMS" in "/storage/shared/research/cinn/2020/gbgaba/scripts/GLMs"
+
 1. Exit Glm GUI
 
 </td>
@@ -177,31 +284,59 @@ In General Linear Model window:
 Notes: GLM files can be found in the GLMs folder in the github directory https://github.com/CarolynMcNabb/GUTMIC_pilot_analysis.git 
 
 
-3.7. Create group-level independent components using FSL's MELODIC. In the ubuntu terminal, type:
+## 3.7. Create group-level independent components using FSL's MELODIC. 
+In the ubuntu terminal, type:
 ```
 3.7_melodic.sh
 ```
 
-3.8. Run dual regression in FSL to estimate a "version" of each of the group-level spatial maps for each subject. Dual regression regresses the group-spatial-maps into each subject's 4D dataset to give a set of timecourses (stage 1) and then regresses those timecourses into the same 4D dataset to get a subject-specific set of spatial maps (stage 2). In the ubuntu terminal, type:
+## 3.8. Dual regression
+Run dual regression in FSL to estimate a "version" of each of the group-level spatial maps for each subject. Dual regression regresses the group-spatial-maps into each subject's 4D dataset to give a set of timecourses (stage 1) and then regresses those timecourses into the same 4D dataset to get a subject-specific set of spatial maps (stage 2). In the ubuntu terminal, type:
 ```
 3.8_dualregression.sh
 ```
+----- 
+# the following are from the gutmic study - still to be sorted for the gbgaba study but you will be able to modify these scripts
 
-3.9. Dual regression will not perform an ANOVA and only t-tests can be viewed in the dual regression output directory at present. To run F-tests you need to run randomise on the dual regression output. Although this isn't necessary for the GUTMIC pilot, it may be required for the GutBrainGABA study so I include it here for completeness. In the ubuntu terminal window, type:
+## 3.9. Randomise
+Dual regression will not perform an ANOVA and only t-tests can be viewed in the dual regression output directory at present. To run F-tests you need to run randomise on the dual regression output. Although this isn't necessary for the pilot data, it may be required for the GutBrainGABA study so I include it here for completeness. In the ubuntu terminal window, type:
 ```
 3.9_randomise.sh
 ```
 
 
-## To do:
-- Motion correction
-    * FIX 
+
     
-## Notes to self (private repository)
+## Notes
 
 1. readout time=  ([(EPI factor (89))/(parallel image (1) )-1]*echo spacing (0.58 ms))/1000=.05104
 
-1. Using topup to generate fieldmap results in poor bet performance on magnitude (hifi_b0) image so instead, use GRE fieldmap for unwarping
 
-1. sub-001 does not have fMRI data
+FDR-correction for multiple comparisons using function in matlab…
+function p = hu_reversefdr(n,alpha)
+%Usage: n = number of hypothesis tests
+%Returns uncorrected p value
+ 
+sum = 0;
+for i = 1:n
+    sum = sum + 1/i;
+end
+p = alpha/sum;
 
+hu_reversefdr(12,0.05)#n=12 because we have 6 contrasts (see above) and two DMN components that we are interested in. Two DMN components are IC3 and IC18
+ans =  0.0161
+#FSL needs the p value to be subtracted from 1 to give the value that you use when thresholding. So 1-0.0161 = 0.9839
+
+>> hu_reversefdr(4,0.05)
+
+ans =
+
+    0.0240 for both eigen and eigen_handedness
+1-p=  0.9760
+
+>> hu_reversefdr(40,0.05)
+ans =  0.0117
+>> 1-ans = 0.9883
+>> hu_reversefdr(20,0.05)
+ans = 0.0139
+1-ans = 0.9861
