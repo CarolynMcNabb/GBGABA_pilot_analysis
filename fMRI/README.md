@@ -1,5 +1,5 @@
 # GBGABA PILOT ANALYSIS for resting-state fMRI
-Carolyn McNabb
+Carolyn McNabb 2021
 
 
 ## fMRI analysis using FSL's ICA
@@ -73,7 +73,9 @@ fix –t ./FIX –l ./sub-001/ses-01/func/sub-001_ses-01_FEATpreproc.feat/ ./sub
 ```
 
 FIX classifier output will look like this:
-
+<table>
+  <tr>
+      <td>
 output: set of thresholds is: 1   2   5  10  20  30  40  50<br/>
 [TPR,TNR,(3*TPR+TNR)/4] pairs of results (averaged over datasets, one pair per threshold):
 
@@ -86,6 +88,9 @@ median<br/>
 100.0 100.0 100.0 100.0  98.2  96.2  95.9  92.9<br/>
 63.2 70.9 79.4 84.7 92.4 95.5 97.2 98.4<br/>
 89.4 90.2 92.0 94.2 95.4 95.9 95.8 94.3<br/>
+    </td>
+   </tr>
+</table>
 
 You will need to select the best threshold based on the selectivity and specificity defined in the table. For the above example, a threshold of 30 gives the best accuracy
 
