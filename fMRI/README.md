@@ -2,6 +2,20 @@
 Carolyn McNabb 2021 - Find me at https://github.com/CarolynMcNabb</br>
 fMRI analysis uses FSL 6.0.1 on an ubuntu MATE 16.04 operating system (8GB).</br> 
 All analysis scripts are available [here](https://github.com/CarolynMcNabb/GBGABA_pilot_analysis/tree/main/fMRI)
+
+
+The first time you run these scripts, whether on the virtual machine (VM) or on MacOS, you will need to make the scripts executable. To do this, run the following command in the terminal, replacing [script_name] with the relavant script name and [path_to_script] with the relevant path to the directory where your scripts are kept. Note that this is likely to be a different path for the VM and MacOS. You only have to do this **ONCE** for each script.
+```
+chmod u+x path_to_script/script_name
+```
+
+Every time you log onto a terminal, you need to remind it where your scripts are (or you can modify your bash profile). Once again, replace [path_to_script] with your actual path. In the terminal, type:
+```
+PATH=$PATH:path_to_script
+export PATH
+```
+
+#### *N.B. All the paths in the scripts are specific to my own directories - the paths for the VM should be able to be used without adjusting but the MacOS paths will obviously need to be changed to match your own before continuing.* 
 ___
 
 ### 3.1 perform brain extraction of T1w scan for each participant using FSL's bet function. 

@@ -1,5 +1,7 @@
 # Relaxometry analysis for Gut Brain GABA pilot
-#### Carolyn McNabb 2021
+Carolyn McNabb 2021 - Find me at https://github.com/CarolynMcNabb</br>
+All analysis scripts are available [here](https://github.com/CarolynMcNabb/GBGABA_pilot_analysis/tree/main/Relaxometry)
+
 The first time you run these scripts, whether on the virtual machine (VM) or on MacOS, you will need to make the scripts executable. To do this, run the following command in the terminal, replacing [script_name] with the relavant script name and [path_to_script] with the relevant path to the directory where your scripts are kept. Note that this is likely to be a different path for the VM and MacOS. You only have to do this **ONCE** for each script.
 ```
 chmod u+x path_to_script/script_name
@@ -13,6 +15,7 @@ export PATH
 
 #### *N.B. All the paths in the scripts are specific to my own directories - the paths for the VM should be able to be used without adjusting but the MacOS paths will obviously need to be changed to match your own before continuing.* 
 
+___ 
 
 ## 1.0. Prepare images
 Merge magntitude and phase images using FSL. In ubuntu terminal window, type:
