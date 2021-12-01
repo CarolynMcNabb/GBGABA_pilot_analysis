@@ -141,10 +141,10 @@ Glm
        <td>In Glm setup window:
        
 1. Change first drop down menu to "Higher-level/non-timeseries design"
-1. Change #inputs to 20 (i.e. number of participants)
+1. Change #inputs to equal the number of participants (e.g., will be 250 for the final analysis for workpackage 1)
 
 In General Linear Model window:
-1. Change "Number of main EVs" to 5
+1. Change "Number of main EVs" to 5 (this will change depending on what you have included in your GLM)
 1. Click "Paste" 
 
 In Higher-level model - paste window:
