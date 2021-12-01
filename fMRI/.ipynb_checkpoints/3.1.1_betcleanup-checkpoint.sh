@@ -19,7 +19,8 @@ cd $bids_path
     
     cd ${bids_path}/${i}
     sessions=( $(ls -d ses-*))
-    for ses in ${sessions}; do
+    for visit in ${!sessions[@]}; do
+        ses=${sessions[$visit]}
     
         echo "deleting old brain extraction files"
         rm ${derivative_path}/${i}/${ses}/anat/${i}_${ses}_T1w_brain*

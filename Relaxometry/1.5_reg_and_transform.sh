@@ -25,7 +25,9 @@ for sub in ${!subjects[@]}; do
     cd ${bids_path}/${i}
     sessions=( $(ls -d ses-*))
     
-    for ses in ${sessions}; do
+    for visit in ${!sessions[@]}; do
+        ses=${sessions[$visit]}
+
         if [ -e ${derivative_path}/${i}/${ses}/MP2_T1_brain.nii.gz ]; then
         
             echo "Registering T1 image to group template for ${i} ${ses}"

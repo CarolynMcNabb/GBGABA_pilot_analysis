@@ -20,7 +20,9 @@ for sub in ${!subjects[@]}; do
     cd ${bids_path}/${i}
     sessions=( $(ls -d ses-*))
     
-    for ses in ${sessions}; do
+    for visit in ${!sessions[@]}; do
+        ses=${sessions[$visit]}
+
         if [ -e ${derivative_path}/${i}/${ses}/MP2_UNI.nii.gz ]; then
         
             echo "Masking UNI image for ${i} ${ses}"

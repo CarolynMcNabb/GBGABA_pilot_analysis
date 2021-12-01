@@ -29,7 +29,9 @@ if [ ${userinput} == "Y" ] || [ ${userinput} == "y" ]; then
         cd ${derivative_path}/${i}
         sessions=( $(ls -d ses-*))
     
-        for ses in ${sessions}; do
+        for visit in ${!sessions[@]}; do
+            ses=${sessions[$visit]}
+
             if [ -d ${derivative_path}/${i}/${ses}/func/${i}_${ses}_FEATpreproc.feat ]; then
         
                 echo "Running FIX stage 2 for ${i} ${ses}"

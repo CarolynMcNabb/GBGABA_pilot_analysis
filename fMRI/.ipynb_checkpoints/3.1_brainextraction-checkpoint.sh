@@ -19,7 +19,8 @@ for sub in ${!subjects[@]}; do
     
     cd ${bids_path}/${i}
     sessions=( $(ls -d ses-*))
-    for ses in ${sessions}; do
+    for visit in ${!sessions[@]}; do
+        ses=${sessions[$visit]}
     
         echo "Making anat directory for ${i}_${ses}"
         mkdir -p ${derivative_path}/${i}/${ses}/anat

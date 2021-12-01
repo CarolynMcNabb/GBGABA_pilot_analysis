@@ -18,7 +18,9 @@ for sub in ${!subjects[@]}; do
     
     cd ${bids_path}/${i}
     sessions=( $(ls -d ses-*))
-    for ses in ${sessions}; do
+    for visit in ${!sessions[@]}; do
+        ses=${sessions[$visit]}
+
     
         if [ -e ${bids_path}/${i}/${ses}/anat/${i}_${ses}_TI1_magnitude_mp2rage.nii.gz ]; then
         
