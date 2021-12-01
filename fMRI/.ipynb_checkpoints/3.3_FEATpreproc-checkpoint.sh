@@ -8,7 +8,7 @@
 module load fsl6.0 #load fsl - if you are using a machine other than the virtual machine at University of Reading, you can comment out this line.
 
 bids_path=/storage/shared/research/cinn/2020/gbgaba/pilot_BIDS
-derivative_path=/storage/shared/research/cinn/2020/gbgaba/pilot_BIDS/derivatives/fMRI/preprocessed
+derivative_path=${bids_path}/derivatives/fMRI/preprocessed
 #create a directory to put the FEATpreproc files into
 script_path=/storage/shared/research/cinn/2020/gbgaba/scripts
 

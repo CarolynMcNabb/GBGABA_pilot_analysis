@@ -17,12 +17,12 @@ GLM_path=${script_path}/GLMs
 #Number of permutations
 perm=5000
 
-echo "Running dual regression for GUTMIC data"
+echo "Running dual regression for GBGABA WP1 data"
 
-dual_regression ${analysis_path}/melodic_components/melodic_IC.nii.gz 1 ${GLM_path}/ICA_LCMS.mat ${GLM_path}/ICA_LCMS.con ${perm} ${analysis_path}/dual_regression.DR `cat ${script_path}/melodic_inputlist.txt`
+dual_regression ${analysis_path}/melodic_components_WP1/melodic_IC.nii.gz 1 ${GLM_path}/ICA_LCMS.mat ${GLM_path}/ICA_LCMS.con ${perm} ${analysis_path}/dual_regression_WP1.DR `cat ${script_path}/melodic_inputlist_WP1.txt`
 
 #save inferential statistics into a file within the analysis directory
 #the ?s act as wildcards; ?? refers to the number of the component and ? refers to the contrast you are asking about:
-for i in ${analysis_path}/dual_regression.DR/dr_stage3_ic00??_tfce_corrp_tstat?.nii.gz ; do
-    echo ${i} `fslstats ${i} -R` >> ${analysis_path}/inferential_stats.txt
+for i in ${analysis_path}/dual_regression_WP1.DR/dr_stage3_ic00??_tfce_corrp_tstat?.nii.gz ; do
+    echo ${i} `fslstats ${i} -R` >> ${analysis_path}/inferential_stats_ttests_WP1.txt
 done

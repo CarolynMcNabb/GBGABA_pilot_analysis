@@ -24,3 +24,11 @@ for sub in ${!subjects[@]}; do
             fi
      done
 done
+
+dim=30
+ics="$((dim-1))"
+
+
+for ic in $( seq 00 ${ics} ) ; do
+echo `printf "%02d\n" $ic`
+done

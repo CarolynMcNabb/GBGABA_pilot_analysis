@@ -7,7 +7,7 @@
 
 
 bids_path=/storage/shared/research/cinn/2020/gbgaba/pilot_BIDS
-derivative_path=${bids_path}/derivatives/relaxometry/preprocessed
+derivative_path=${bids_path}/derivatives/fMRI/preprocessed
 
 
 

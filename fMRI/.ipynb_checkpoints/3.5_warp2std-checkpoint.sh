@@ -9,7 +9,7 @@ module load fsl6.0 #load fsl - if you are using a machine other than the virtual
 
 
 bids_path=/storage/shared/research/cinn/2020/gbgaba/pilot_BIDS
-derivative_path=${bids_path}/derivatives/relaxometry/preprocessed
+derivative_path=${bids_path}/derivatives/fMRI/preprocessed
 
 cd ${derivative_path}
 subjects=( $(ls -d sub-* )) 

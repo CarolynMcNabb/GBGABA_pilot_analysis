@@ -1,12 +1,10 @@
 # GBGABA PILOT ANALYSIS for resting-state fMRI
-Carolyn McNabb 2021
+Carolyn McNabb 2021 - Find me at https://github.com/CarolynMcNabb</br>
+fMRI analysis uses FSL 6.0.1 on an ubuntu MATE 16.04 operating system (8GB).</br> 
+All analysis scripts are available [here](https://github.com/CarolynMcNabb/GBGABA_pilot_analysis/tree/main/fMRI)
+___
 
-
-## fMRI analysis using FSL's ICA
-Uses FSL 6.0.1 on an ubuntu MATE 16.04 operating system (8GB). 
-
-
-## 3.1 perform brain extraction of T1w scan for each participant using FSL's bet function. 
+### 3.1 perform brain extraction of T1w scan for each participant using FSL's bet function. 
 In the Ubuntu terminal, type:
 ```
 3.1_brainextraction.sh
@@ -16,27 +14,27 @@ If brain extraction was unsuitable (you can check which subjects you were unhapp
 3.1.1_betcleanup.sh
 ```
 
-## 3.2. Create a B0 fieldmap for bias field correction during registration in FEAT. 
+### 3.2. Create a B0 fieldmap for bias field correction during registration in FEAT. 
 In the Ubuntu terminal, type:
 ```
 3.2_fieldmap.sh
 ```
 
-## 3.3. Run the first FEAT step (FEATpreproc) to produce independent components that will be used for motion correction. 
+### 3.3. Run the first FEAT step (FEATpreproc) to produce independent components that will be used for motion correction. 
 For this step, you need to have put the FEATpreproc.fsf file in a folder that you can access and amend the path to that folder in the 3.3_FEATpreproc.sh script. After doing that, in the Ubuntu terminal, type:
 ```
 3.3_FEATpreproc.sh
 ```
-### CHECK FEAT OUTPUT BEFORE PROCEEDING – 
+#### CHECK FEAT OUTPUT BEFORE PROCEEDING – 
 ```
 firefox /storage/shared/research/cinn/2020/gbgaba/pilot_BIDS/derivatives/fMRI/preprocessed/sub-008/ses-01/func/sub-008_ses-01_FEATpreproc.feat/report.html
 ```
-#### Exclude any participant whose motion parameters excede:
+##### Exclude any participant whose motion parameters excede:
 Absolute motion >1.5 mm<br/>
 Root mean square relative motion > 0.2 mm
 
 
-#### Also assess whether registration is acceptable - if it is terrible, try going back to struct_brain and removing any non-brain that is still included. If still terrible then exclude the participant.
+##### Also assess whether registration is acceptable - if it is terrible, try going back to struct_brain and removing any non-brain that is still included. If still terrible then exclude the participant.
 
 For the first 10 participants, make a note of the melodic components that are noise and create a text document for each participant called hand_labels_noise.txt in the feat directory. It should be a single line like this [1, 3, 5, 8, 9] – counting starts at one not zero (note that the square brackets, and use of commas, is required). Classification of noisey components can be done in fsleyes using the command below to view…
 
@@ -46,7 +44,7 @@ fsleyes --scene melodic -ad filtered_func_data.ica &
 ```
 *If you need some help classifying components, check out this paper by [Griffanti et al., 2017](https://www.sciencedirect.com/science/article/pii/S1053811916307583)*
 
-## 3.4. Perform additional motion correction with FIX ([FSL’s ICA-based noise removal](https://fsl.fmrib.ox.ac.uk/fsl/fslwiki/FIX))
+### 3.4. Perform additional motion correction with FIX ([FSL’s ICA-based noise removal](https://fsl.fmrib.ox.ac.uk/fsl/fslwiki/FIX))
 
 When using FIX, you first need to update the path to the Matlab folder in your bash profile so that FIX can find it.
  
@@ -116,13 +114,13 @@ Because the next steps will look for (and use) the filtered_func_data, the follo
 
 
 
-## 3.5. Warp functional data from subject space into standard space. 
+### 3.5. Warp functional data from subject space into standard space. 
 In Ubuntu terminal window, type:
 ```
 3.5_warp2std.sh
 ```
 
-## 3.6. Smooth data and prepare GLM
+### 3.6. Smooth data and prepare GLM
 Smooth the functional data (now in standard space) using a 5 mm Gausian kernel and then downsample to 2mm (currently in 1mm space) to increase speed of MELODIC. In ubuntu terminal, type:
 ```
 3.6_smoothdownsample.sh
@@ -213,7 +211,7 @@ In General Linear Model window:
 
 1. Save as "ICA_LCMS_Ftest" in "/storage/shared/research/cinn/2020/gbgaba/scripts/GLMs"
            
-### Now repeat for t tests
+#### Now repeat for t tests
            
 In General Linear Model window:
 1. Click on "Contrasts & F-tests" tab
@@ -289,59 +287,30 @@ In General Linear Model window:
 Notes: GLM files can be found in the GLMs folder in the github directory https://github.com/CarolynMcNabb/GUTMIC_pilot_analysis.git 
 
 
-## 3.7. Create group-level independent components using FSL's MELODIC. 
+### 3.7. Create group-level independent components using FSL's MELODIC. 
 In the ubuntu terminal, type:
 ```
 3.7_melodic.sh
 ```
 
-## 3.8. Dual regression
+### 3.8. Dual regression
 Run dual regression in FSL to estimate a "version" of each of the group-level spatial maps for each subject. Dual regression regresses the group-spatial-maps into each subject's 4D dataset to give a set of timecourses (stage 1) and then regresses those timecourses into the same 4D dataset to get a subject-specific set of spatial maps (stage 2). In the ubuntu terminal, type:
 ```
 3.8_dualregression.sh
 ```
------ 
-# the following are from the gutmic study - still to be sorted for the gbgaba study but you will be able to modify these scripts
 
-## 3.9. Randomise
+### 3.9. Randomise
 Dual regression will not perform an ANOVA and only t-tests can be viewed in the dual regression output directory at present. To run F-tests you need to run randomise on the dual regression output. Although this isn't necessary for the pilot data, it may be required for the GutBrainGABA study so I include it here for completeness. In the ubuntu terminal window, type:
 ```
 3.9_randomise.sh
 ```
 
-
+Use information contained in inferential_stats_ftests_WP1.txt and inferential_stats_ttests_WP1.txt to determine which independent components demonstrate a statistically significant effect. Note that you should correct for multiple comparisons, e.g., by using the False Discovery Rate. There is a matlab script for determining FDR (FDRcorr.m) if you want to use that.
 
     
-## Notes
+### Notes
 
 1. readout time=  ([(EPI factor (89))/(parallel image (1) )-1]*echo spacing (0.58 ms))/1000=.05104
+1. Analysis scripts have been developed mainly for analysis of workpackage 1 data but should be easy enough to modify for use in workpackage 2. The main modifications needed for workpackage 2 will be in GLM design and implementation. Hopefully the preprocessing steps shouldn't need much tinkering though.
 
 
-FDR-correction for multiple comparisons using function in matlab…
-function p = hu_reversefdr(n,alpha)
-%Usage: n = number of hypothesis tests
-%Returns uncorrected p value
- 
-sum = 0;
-for i = 1:n
-    sum = sum + 1/i;
-end
-p = alpha/sum;
-
-hu_reversefdr(12,0.05)#n=12 because we have 6 contrasts (see above) and two DMN components that we are interested in. Two DMN components are IC3 and IC18
-ans =  0.0161
-#FSL needs the p value to be subtracted from 1 to give the value that you use when thresholding. So 1-0.0161 = 0.9839
-
->> hu_reversefdr(4,0.05)
-
-ans =
-
-    0.0240 for both eigen and eigen_handedness
-1-p=  0.9760
-
->> hu_reversefdr(40,0.05)
-ans =  0.0117
->> 1-ans = 0.9883
->> hu_reversefdr(20,0.05)
-ans = 0.0139
-1-ans = 0.9861

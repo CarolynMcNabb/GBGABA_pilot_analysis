@@ -23,7 +23,16 @@ bids_path=/storage/shared/research/cinn/2020/gbgaba/pilot_BIDS
 analysis_path=${bids_path}/derivatives/fMRI/analysis
 script_path=/storage/shared/research/cinn/2020/gbgaba/scripts
 
-echo "MELODIC running - will produce ${dim} components"
-melodic -i ${script_path}/melodic_inputlist.txt -o ${analysis_path}/melodic_components --nobet --bgthreshold=${bgthreshold} --tr=${tr} --mmthresh=${mmthresh} --dim=${dim}
 
+read -p "Number of independent components is ${dim}. Is this okay? (Y/N): " userinput
+       
+if [ ${userinput} == "Y" ] || [ ${userinput} == "y" ]; then
+
+    echo "MELODIC running for WP1 - will produce ${dim} components"
+    melodic -i ${script_path}/melodic_inputlist_WP1.txt -o ${analysis_path}/melodic_components_WP1 --nobet --bgthreshold=${bgthreshold} --tr=${tr} --mmthresh=${mmthresh} --dim=${dim}
+else
+
+    echo "Go back and define the number of components in the script 3.7_melodic.sh"
+
+fi
 
