@@ -19,3 +19,6 @@ qi mp2rage mp2_x.nii --json=yourfile.json --beta=B
 You will need to empirically determine the right number for beta. You want a value that removes noise in the background of the output uni image, but does not re-introduce B1 inhomogeneity. Once you have a good number it should work across all subjects.
 
 Should be able to turn this into a python or bash script for ease of use.
+
+
+antsRegistrationSyN.sh -d 3 -f /storage/shared/research/cinn/2020/gbgaba/pilot_BIDS/derivatives/relaxometry/preprocessed/sub-008/ses-01/sub-008_ses-01_MP2_T1_brain.nii.gz -m /storage/shared/research/cinn/2020/gbgaba/pilot_BIDS/derivatives/relaxometry/preprocessed/template/group_template_template0.nii.gz -o /storage/shared/research/cinn/2020/gbgaba/pilot_BIDS/derivatives/relaxometry/preprocessed/sub-008/ses-01/sub-008_ses-01_T1_to_group_template

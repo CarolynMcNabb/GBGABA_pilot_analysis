@@ -1,8 +1,9 @@
 #Carolyn McNabb 
 #August 2021
 #GBGABA BRAIN DATA PILOT ANALYSIS 
-#3.1.1_betcleanup.sh performs brain extraction using centre of gravity coordinates those ppts who were previously identified to have poor brain extraction in 3.1_brainextraction.sh.
-#Note that subjects have been entered manually into this script (line 17)
+#3.1.1_betcleanup.sh performs brain extraction using centre of gravity coordinates 
+#for those ppts who were previously identified to have poor brain extraction in 3.1_brainextraction.sh.
+#Note that subjects have been entered manually into this script (line 18)
 #Output is stored in derivatives/fMRI/preprocessed folder for each ppt
 
 #!/bin/bash
