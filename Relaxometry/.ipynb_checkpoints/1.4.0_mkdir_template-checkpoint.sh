@@ -1,10 +1,8 @@
 #Carolyn McNabb 
 #November 2021
 #GBGABA BRAIN DATA PILOT ANALYSIS 
-#1.4.0_mkdir_template.sh will copy the brain-extracted T1 images from selected participants (which you need to define in the script below)
+#1.4.0_mkdir_template.sh will copy the brain-extracted T1/UNI images from selected participants (which you need to define in the script below)
 #!/bin/bash
-
-module load fsl6.0 #load fsl - if you are using a machine other than the virtual machine at University of Reading, you can comment out this line.
 
 bids_path=/storage/shared/research/cinn/2020/gbgaba/pilot_BIDS
 derivative_path=${bids_path}/derivatives/relaxometry/preprocessed
@@ -19,15 +17,12 @@ for sub in 003 004 005 008; do #list the participants you want to include in the
     
     cd ${derivative_path}/${i}
 
-    for ses in 01; do
-        s=$(echo "ses-${ses}")
-        #first reorient the brain extracted image to standard orientation using FSL
-        #this is to avoid any issues down the line when creating the group template
-        fslreorient2std ${derivative_path}/${i}/${ses}/${i}_${s}_MP2_T1_brain.nii.gz ${derivative_path}/${i}/${ses}/${i}_${s}_MP2_T1_brain.nii.gz
+    for session in 01; do
+        ses=$(echo "ses-${session}")
         
         #now copy the file to the template directory
-        cp ${derivative_path}/${i}/${ses}/${i}_${s}_MP2_T1_brain.nii.gz ${template_path}
-        
+        #cp ${derivative_path}/${i}/${ses}/${i}_${s}_MP2_T1_brain.nii.gz ${template_path}
+        cp ${derivative_path}/${i}/${ses}/${i}_${ses}_MP2_UNI_brain.nii.gz ${template_path}
 
     done
 done

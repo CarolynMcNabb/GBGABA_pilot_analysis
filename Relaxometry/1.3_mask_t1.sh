@@ -21,7 +21,7 @@ for sub in ${!subjects[@]}; do
         ses=${sessions[$visit]}
     
         if [ -e ${derivative_path}/${i}/${ses}/MP2_T1.nii.gz ]; then
-            
+
             echo "Masking t1 and UNI images for ${i} ${ses} - outputs are ${i}_${ses}_MP2_T1_brain.nii.gz and ${i}_${ses}_MP2_UNI_brain.nii.gz "
         
             fslmaths ${derivative_path}/${i}/${ses}/MP2_T1.nii.gz -mul ${derivative_path}/${i}/${ses}/${i}_${ses}_mask.nii.gz ${derivative_path}/${i}/${ses}/${i}_${ses}_MP2_T1_brain.nii.gz

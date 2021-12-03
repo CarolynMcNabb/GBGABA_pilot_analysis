@@ -32,11 +32,13 @@ for sub in ${!subjects[@]}; do
         
             echo "Registering T1 image to group template for ${i} ${ses}"
         
-            antsRegistrationSyN.sh -d ${dim} -f ${derivative_path}/${i}/${ses}/${i}_${ses}_MP2_T1_brain.nii.gz -m ${template_path}/group_template_template0.nii.gz -o ${derivative_path}/${i}/${ses}/${i}_${ses}_T1_to_group_template
+#            antsRegistrationSyN.sh -d ${dim} -f ${derivative_path}/${i}/${ses}/${i}_${ses}_MP2_T1_brain.nii.gz -m ${template_path}/group_template_template0.nii.gz -o ${derivative_path}/${i}/${ses}/${i}_${ses}_T1_to_group_template
+            antsRegistrationSyN.sh -d ${dim} -f ${derivative_path}/${i}/${ses}/${i}_${ses}_MP2_UNI_brain.nii.gz -m ${template_path}/group_template_template0.nii.gz -o ${derivative_path}/${i}/${ses}/${i}_${ses}_UNI_to_group_template
             
             echo "Transforming T1 image to MNI space for ${i} ${ses}"
             
-            antsApplyTransforms -d ${dim} -i ${derivative_path}/${i}/${ses}/${i}_${ses}_MP2_T1_brain.nii.gz -r ${mni_path}/MNI152_T1_brain.nii.gz -t ${template_path}/group_template_in_MNI1Warp.nii.gz -t ${template_path}/group_template_in_MNI0GenericAffine.mat -t ${derivative_path}/${i}/${ses}/${i}_${ses}_T1_to_group_template_warp -t ${derivative_path}/${i}/${ses}/${i}_${ses}_T1_to_group_template_affine -o ${derivative_path}/${i}/${ses}/${i}_${ses}_MP2_T1_brain_MNI
+#            antsApplyTransforms -d ${dim} -i ${derivative_path}/${i}/${ses}/${i}_${ses}_MP2_T1_brain.nii.gz -r ${mni_path}/MNI152_T1_1mm_brain.nii.gz -o ${derivative_path}/${i}/${ses}/${i}_${ses}_MP2_T1_brain_MNI.nii.gz -t ${template_path}/group_template_in_MNI1Warp.nii.gz -t ${template_path}/group_template_in_MNI0GenericAffine.mat -t ${derivative_path}/${i}/${ses}/${i}_${ses}_T1_to_group_template1Warp.nii.gz -t ${derivative_path}/${i}/${ses}/${i}_${ses}_T1_to_group_template0GenericAffine.mat  -v
+            antsApplyTransforms -d ${dim} -i ${derivative_path}/${i}/${ses}/${i}_${ses}_MP2_UNI_brain.nii.gz -r ${mni_path}/MNI152_T1_1mm_brain.nii.gz -o ${derivative_path}/${i}/${ses}/${i}_${ses}_MP2_UNI_brain_MNI.nii.gz -t ${template_path}/group_template_in_MNI1Warp.nii.gz -t ${template_path}/group_template_in_MNI0GenericAffine.mat -t ${derivative_path}/${i}/${ses}/${i}_${ses}_UNI_to_group_template1Warp.nii.gz -t ${derivative_path}/${i}/${ses}/${i}_${ses}_UNI_to_group_template0GenericAffine.mat  -v
         else
             echo "MP2_T1_brain file does not exist for ${i} ${ses}"
         fi
