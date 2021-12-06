@@ -89,7 +89,27 @@ In the Vanilla VM, load ANTs module and run antsMultivariateTemplateConstruction
 1.4.1_construct_template.sh
 ```
 
-Now register the group template to MNI space - standard MNI data are in the gbgaba/standard directory
+Now register the group template to MNI space - standard MNI data are in the gbgaba/standard directory. 
+
+As a first step, we will do a rough alignment using [ITK-SNAP](http://www.itksnap.org/download/snap/process.php?link=11444&root=nitrc). I used ITK-SNAP on my iMac but it will also work in Linux.
+
+1. In the ITK-SNAP GUI, click on `File > Open Main Image`, click `Browse` and select `/Volumes/gold/cinn/2020/gbgaba/standard/MNI152_T1_1mm_brain.nii.gz`, click `Next` then `Finish`. Now select the group template. Click on `File > Add Another Image`, click `Browse` and select `/Volumes/gold/cinn/2020/gbgaba/pilot_BIDS/derivatives/relaxometry/preprocessed/template/group_template_template0.nii.gz`. Click `Next`, select the option `As a semi-transparent overlay` so that you can see both images together, and Overlay colour map as `Grayscale`. Click `Finish`.
+1. You won't be able to see the template image to begin with, so find the group_template_template0 layer in the side panel and right click on it. Adjust the opacity so that you can see both the template and the MNI standard image underneath.
+1. Open the registration panel by clicking on `Tools > Registration`. Select the `Manual` tab and click `Interactive Tool`. Now move the group_template_template0 image to be in line with the MNI standard image by using the click and drag and rotate options (you'll get the hang of it pretty quickly once you start playing around). 
+1. Now switch over to the `Automatic` tab and select the following options:
+    - Transformation model = `Rigid`
+    - Image similarity metric = `Mutual information`
+    - Use segmentation as mask = `Untick`
+    - Multi-resolution schedule:
+        - Coarsest level = `4x`
+        - Finest level = `2x`<br/><br/>
+        
+1. Click `Run Registration`
+1. Click on `Save` icon (floppy disk) in the Registration tab and save registration as initial_matrix.txt (File Format = `ITK Transform Files`). Click `OK`
+
+Now this initial template is going to be used to initialise our registration with antsRegistrationSyN.sh. 
+
+
 ```
 1.4.2_template2mni.sh
 ```
@@ -101,3 +121,7 @@ antsRegistrationSyN then antsApplyTransforms
 ```
 
 ---
+
+If you publish results obtained using ITK-SNAP, please cite the following paper:
+
+Paul A. Yushkevich, Joseph Piven, Heather Cody Hazlett, Rachel Gimpel Smith, Sean Ho, James C. Gee, and Guido Gerig. User-guided 3D active contour segmentation of anatomical structures: Significantly improved efficiency and reliability. Neuroimage. 2006 Jul 1; 31(3):1116-28.
