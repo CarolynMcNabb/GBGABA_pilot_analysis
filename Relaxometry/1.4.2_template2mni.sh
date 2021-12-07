@@ -1,5 +1,5 @@
 #Carolyn McNabb 
-#November 2021
+#December 2021
 #GBGABA BRAIN DATA PILOT ANALYSIS 
 #1.4.2_template2mni.sh will use antsRegistrationSyN.sh to register the group template to MNI space
 #!/bin/bash
@@ -19,4 +19,4 @@ dim=3 #image dimensions
 
 cd ${template_path}
 
-antsRegistrationSyN.sh -d ${dim} -m ${template_path}/group_template_template0.nii.gz -f ${mni_path}/MNI152_T1_1mm_brain.nii.gz -i ${template_path}/initial_matrix.mat -o ${template_path}/group_template_in_MNI 
+antsRegistrationSyN.sh -d ${dim} -m ${template_path}/group_template_template0.nii.gz -f ${mni_path}/MNI152_T1_1mm_brain.nii.gz -i ${template_path}/initial_matrix.txt -o ${template_path}/group_template_in_MNI 

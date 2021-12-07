@@ -2,23 +2,25 @@
 Carolyn McNabb 2021 - Find me at https://github.com/CarolynMcNabb</br>
 All analysis scripts are available [here](https://github.com/CarolynMcNabb/GBGABA_pilot_analysis/tree/main/Relaxometry)
 
-The first time you run these scripts, whether on the virtual machine (VM) or on MacOS, you will need to make the scripts executable. To do this, run the following command in the terminal, replacing [script_name] with the relavant script name and [path_to_script] with the relevant path to the directory where your scripts are kept. Note that this is likely to be a different path for the VM and MacOS. You only have to do this **ONCE** for each script.
+The first time you run these scripts, whether on the virtual machine (VM) or on MacOS, you will need to make the scripts executable. To do this, run the following command in the terminal, replacing `script_name` with the relavant script name and `path_to_script` with the relevant path to the directory where your scripts are kept. Note that this is likely to be a different path for the VM and MacOS. You only have to do this **ONCE** for each script.
 ```
 chmod u+x path_to_script/script_name
 ```
 
-Every time you log onto a terminal, you need to remind it where your scripts are (or you can modify your bash profile). Once again, replace [path_to_script] with your actual path. In the terminal, type:
+Every time you log onto a terminal, you need to remind it where your scripts are (or you can modify your bash profile). Once again, replace `path_to_script` with your actual path. <br/>
+In the Ubuntu terminal, type:
 ```
 PATH=$PATH:path_to_script
 export PATH
 ```
 
-#### *N.B. All the paths in the scripts are specific to my own directories - the paths for the VM should be able to be used without adjusting but the MacOS paths will obviously need to be changed to match your own before continuing.* 
+**N.B. All the paths in the scripts are specific to my own directories - the paths for the VM should be able to be used without adjusting but the MacOS paths will obviously need to be changed to match your own before continuing.** 
 
 ___ 
 
 ## 1.0. Prepare images
-Merge magntitude and phase images using FSL. In ubuntu terminal window, type:
+Merge magntitude and phase images using FSL. <br/>
+In NeuroDebian Ubuntu terminal window (or wherever FSL is installed), type:
 ```
 1.0_merge.sh
 ```
@@ -55,8 +57,8 @@ In the bash terminal (macos), type:
 ## 1.2. Create MP2RAGE brain mask using HD-BET 
 HD-BET is available [here](https://github.com/MIC-DKFZ/HD-BET)
 
-Theoretically this should work on the VM but I have had trouble installing it. It works on MacOS for now but I had to add the -device cpu to do this. This can be removed if used on the VM.
-Make sure you have installed HD-BET before running this script (follow the README instructions on their github page).
+*Theoretically this should work on the VM but I have had trouble installing it. It works on MacOS for now but I had to add the -device cpu to do this. This can be removed if used on the VM.*<br/>
+Make sure you have installed HD-BET before running this script (follow the README instructions on their github page).<br/>
 In MacOS terminal, type:
 
 ```
@@ -64,27 +66,29 @@ In MacOS terminal, type:
 ```
 
 ## 1.3. Get brain extracted T1 by using mask from HD-BET
-This step should be conducted using the VM (Ubuntu). In the Ubuntu terminal, type:
+This step should be conducted using the NeuroDebian VM (Ubuntu), or wherever FSL is installed. <br/>
+In the Ubuntu terminal, type:
 ```
 1.3_mask_t1.sh
 ```
 
-#### Now the data are ready for co-registraton and segmentation 
+**Now the data are ready for co-registraton and segmentation** 
 
 ## 1.4. Create a group template based on GBGABA participants' data using ANTs 
 Recommendation is to use about 10 participants' data to create the group template (allegedly, adding more than this doesn't actually improve the template but feel free to try!)
 
 This step uses antsMultivariateTemplateConstruction.sh (N.B. I read a thread where this version performs better than antsMultivariateTemplateConstruction2.sh and so am going with the older version for now) - this can be reviewed later. 
 
-#### Before running this step, you need to select 10 good looking T1 images that you want to use to create the template. All images to be added to the template should be in the same directory, and this script should be invoked from that directory.
-In the ubuntu terminal, type:
+**Before running this step, you need to select 10 good looking T1 images that you want to use to create the template. All images to be added to the template should be in the same directory, and this script should be invoked from that directory.**<br/>
+In any Ubuntu terminal, type:
 ```
 1.4.0_mkdir_template.sh
 ```
 
-### To do: This can be run using SLURM on the cluster [-c 5] 
+**To do: This can be run using SLURM on the cluster [-c 5] BUT, the ANTS module is not available on the cluster yet** 
 
-In the Vanilla VM, load ANTs module and run antsMultivariateTemplateConstruction.sh - Note, this takes ages without SLURM.
+In the Vanilla VM (or wherever ANTs is installed), load ANTs module and run antsMultivariateTemplateConstruction.sh - Note, this takes ages without SLURM.<br/>
+In the Vanilla VM Ubuntu terminal, type:
 ```
 1.4.1_construct_template.sh
 ```
@@ -107,21 +111,34 @@ As a first step, we will do a rough alignment using [ITK-SNAP](http://www.itksna
 1. Click `Run Registration`
 1. Click on `Save` icon (floppy disk) in the Registration tab and save registration as initial_matrix.txt (File Format = `ITK Transform Files`). Click `OK`
 
-Now this initial template is going to be used to initialise our registration with antsRegistrationSyN.sh. 
+Now this initial template is going to be used to initialise our registration with antsRegistrationSyN.sh. <br/>
+Back in the Vanilla VM Ubuntu terminal, type:
 
 
 ```
 1.4.2_template2mni.sh
 ```
 
-## 1.5. Register and transform all subject data to MNI space
+## 1.5. Register and transform all subject data to MNI space 
+This script registers each subject's UNI image to the group template and then uses the affine matrices and warp files (as well as the affine matrices and warp files created in `1.4.2_template2mni.sh`) to warp the T1 image for each subject into MNI space. <br/>
+In the Vanilla VM Ubuntu terminal, type:
 ```
 1.5_reg_and_transform.sh
-antsRegistrationSyN then antsApplyTransforms
 ```
+
+## 1.6. Set up GLM
+
+
+
 
 ---
 
-If you publish results obtained using ITK-SNAP, please cite the following paper:
+**Please cite the following papers:**
 
-Paul A. Yushkevich, Joseph Piven, Heather Cody Hazlett, Rachel Gimpel Smith, Sean Ho, James C. Gee, and Guido Gerig. User-guided 3D active contour segmentation of anatomical structures: Significantly improved efficiency and reliability. Neuroimage. 2006 Jul 1; 31(3):1116-28.
+**QUIT:** Wood, (2018). QUIT: QUantitative Imaging Tools. Journal of Open Source Software, 3(26), 656, https://doi.org/10.21105/joss.00656
+
+**ANTS:** Avants, B. B., Tustison, N., & Song, G. (2009). Advanced normalization tools (ANTS). Insight j, 2(365), 1-35.
+
+**ITK:** Paul A. Yushkevich, Joseph Piven, Heather Cody Hazlett, Rachel Gimpel Smith, Sean Ho, James C. Gee, and Guido Gerig. User-guided 3D active contour segmentation of anatomical structures: Significantly improved efficiency and reliability. Neuroimage. 2006 Jul 1; 31(3):1116-28.
+
+**Randomise:** Winkler AM, Ridgway GR, Webster MA, Smith SM, Nichols TE. Permutation inference for the general linear model. NeuroImage, 2014;92:381-397. (Open Access)

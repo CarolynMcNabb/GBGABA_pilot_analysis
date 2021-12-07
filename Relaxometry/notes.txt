@@ -26,3 +26,10 @@ antsRegistrationSyN.sh -d 3 -f /storage/shared/research/cinn/2020/gbgaba/pilot_B
 antsApplyTransforms -d 3 -i /storage/shared/research/cinn/2020/gbgaba/pilot_BIDS/derivatives/relaxometry/preprocessed/sub-008/ses-01/sub-008_ses-01_MP2_T1_brain.nii.gz -r /storage/shared/research/cinn/2020/gbgaba/standard/MNI152_T1_1mm_brain.nii.gz -o /storage/shared/research/cinn/2020/gbgaba/pilot_BIDS/derivatives/relaxometry/preprocessed/sub-008/ses-01/sub-008_ses-01_MP2_T1_brain_MNI.nii.gz -t /storage/shared/research/cinn/2020/gbgaba/pilot_BIDS/derivatives/relaxometry/preprocessed/template/group_template_in_MNI1Warp.nii.gz -t /storage/shared/research/cinn/2020/gbgaba/pilot_BIDS/derivatives/relaxometry/preprocessed/template/group_template_in_MNI0GenericAffine.mat -t /storage/shared/research/cinn/2020/gbgaba/pilot_BIDS/derivatives/relaxometry/preprocessed/sub-008/ses-01/sub-008_ses-01_T1_to_group_template1Warp.nii.gz -t /storage/shared/research/cinn/2020/gbgaba/pilot_BIDS/derivatives/relaxometry/preprocessed/sub-008/ses-01/sub-008_ses-01_T1_to_group_template0GenericAffine.mat -v
 
 
+qi glmcontrasts
+Randomise does not save any contrast files, i.e. group difference maps, it only saves the statistical maps. For quantitative imaging, the contrasts can be informative to look at, as if scaled correctly, they can be interpreted as effect size maps. A group difference in human white matter T1 of only tens of milliseconds, even if it has a high p-value, is perhaps not terribly interesting as it corresponds to a change of about 1%. These contrast maps are particularly useful if used with the dual-coding visualisation technique.
+
+Example Command Line
+
+qi glmcontrasts merged_images.nii design.txt contrasts.txt --out=contrast_prefix
+The design and contrasts files should be raw text (not passed through Text2Vest). One contrast image will be generated for each row of the contrast matrix.

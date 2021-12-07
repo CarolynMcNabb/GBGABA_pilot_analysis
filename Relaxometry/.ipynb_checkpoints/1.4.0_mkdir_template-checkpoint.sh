@@ -12,7 +12,7 @@ mkdir -p ${template_path}
 
 cd ${derivative_path}
 
-for sub in 003 004 005 008; do #list the participants you want to include in the template here
+for sub in 004 005 008; do #list the participants you want to include in the template here
     i=$(echo "sub-${sub}")
     
     cd ${derivative_path}/${i}
