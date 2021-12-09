@@ -127,9 +127,106 @@ In the Vanilla VM Ubuntu terminal, type:
 ```
 
 ## 1.6. Set up GLM
+The data for the general linear model should contain the microbiota diversity scores (OTIS, Shannon or Faith) and any other variables of interest (e.g., age, handedness and autism quotient). The GLM can first be contstructed in R and then transferred to FSL for use with Randomise.
+In RStudio (or R if you're feeling that way inclined), run the following script:
+```
+1.6_GLM_setup.R
+```
+After doing this, open the GLM gui in FSL. We will create two GLMs, one for the F tests (which we will evaluate using FSL's [Randomise](https://fsl.fmrib.ox.ac.uk/fsl/fslwiki/Randomise)) and one for the t tests (which we will evaluate using FSL's [dual regression](https://fsl.fmrib.ox.ac.uk/fsl/fslwiki/DualRegression)). The reason for including both is that you should look at the outcomes of your F tests to see if they are statistically significant, before you go on to look at the dual regression output. This will also allow you to be smarter with your corrections for multiple comparisons.
 
 
+In the ubuntu terminal, type:
+```
+Glm
+```
 
+<table>
+   <tr>
+       <td>In Glm setup window:
+       
+1. Change first drop down menu to "Higher-level/non-timeseries design"
+1. Change #inputs to equal the number of participants (e.g., will be 250 for the final analysis for workpackage 1)
+
+In General Linear Model window:
+1. Change "Number of main EVs" to 3 (this will change depending on what you have included in your GLM)
+1. Click "Paste" 
+
+In Higher-level model - paste window:
+1. Click "clear"
+1. Paste GLM from 1.6_GLMSetup.R by highlighting and copying all content from GBGABA_GLMotus.csv, then clicking inside the paste window using the scroller button of your mouse.
+1. Click "OK"
+
+In General Linear Model window:
+1. Enter the following names for the EVs:
+    "otus","age","hand"
+1. Click on "Contrasts & F-tests" tab
+1. Change number of "Contrasts" to 1
+1. Change number of F tests to 1
+1. Contrasts should be set up as follows:
+<table>
+  <tr>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td>F1</td>
+
+     <tr>
+      <td>otus</td>
+      <td>1</td>
+      <td>0</td>
+      <td>0</td>
+      <td>🟨</td>
+      
+   </tr>
+</table>
+
+1. Save as "otus_Ftest" in "/storage/shared/research/cinn/2020/gbgaba/pilot_BIDS/derivatives/relaxometry/analysis/GLMs"
+           
+#### Now repeat for t tests
+           
+In General Linear Model window:
+1. Click on "Contrasts & F-tests" tab
+1. Change number of "Contrasts" to 2
+1. Change number of F tests to 0
+1. Contrasts should be set up as follows:
+<table>
+  <tr>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+
+  <tr>
+      <td>otus+</td>
+      <td>1</td>
+      <td>0</td>
+      <td>0</td>
+   </tr>
+   <tr>
+       <td>otus-</td>
+       <td>-1</td>
+       <td>0</td>
+       <td>0</td>
+    </tr>
+</table>
+
+1. Save as "otus" in "/storage/shared/research/cinn/2020/gbgaba/pilot_BIDS/derivatives/relaxometry/analysis/GLMs"
+
+1. Exit Glm GUI
+
+    </td>
+   </tr>
+</table>
+
+Notes: GLM files can be found in the GLMs folder in the github directory 
+
+## 1.7. Run Randomise
+
+## 1.8. Create contrast maps using QUIT
+qi glmcontrasts
+
+## 1.9. visualisation using dual-coding visualisation technique
 
 ---
 

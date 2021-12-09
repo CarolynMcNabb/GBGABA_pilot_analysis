@@ -298,7 +298,6 @@ In General Linear Model window:
 </td>
    </tr>
 </table>
-Notes: GLM files can be found in the GLMs folder in the github directory https://github.com/CarolynMcNabb/GUTMIC_pilot_analysis.git 
 
 
 ### 3.7. Create group-level independent components using FSL's MELODIC. 
