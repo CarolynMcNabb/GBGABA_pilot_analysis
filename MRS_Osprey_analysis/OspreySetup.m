@@ -17,5 +17,5 @@ addpath(genpath('/Volumes/gold/cinn/2020/gbgaba/pilot_BIDS'))
 %change directory to the folder containing Osprey jobfiles
 cd('/Volumes/GoogleDrive/My Drive/GitHub/GBGABA_pilot_analysis/MRS_Osprey_analysis')
 
-%Open Osprey
-Osprey
+
+

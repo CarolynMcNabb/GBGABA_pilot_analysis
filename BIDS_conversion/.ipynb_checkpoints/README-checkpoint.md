@@ -235,6 +235,10 @@ Alternatively, type:
 cd /storage/shared/research/cinn/2020/gbgaba
 dcm2bids -d /storage/shared/research/cinn/2020/gbgaba/raw/GBGABA_002/ -p 002 -s 01 -c /storage/shared/research/cinn/2020/gbgaba/scripts/code/dcm2bids_config.json 
 ```
+Or for main study
+```
+dcm2bids -d /storage/shared/research/cinn/2020/gbgaba/raw/GBGABA_W0001S1/ -p W0001 -s 01 -c /storage/shared/research/cinn/2020/gbgaba/scripts/code/dcm2bids_config.json 
+```
 And Repeat for every subject
 
 

@@ -219,9 +219,10 @@ In General Linear Model window:
    </tr>
 </table>
 
-
+Notes: GLM files can also be found in the GLMs folder in the [github directory](https://github.com/CarolynMcNabb/GBGABA_pilot_analysis/tree/main/Relaxometry/GLMs)
 
 ## 1.7. Run Randomise
+
 
 ## 1.8. Create contrast maps using QUIT
 qi glmcontrasts
