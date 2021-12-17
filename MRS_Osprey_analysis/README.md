@@ -51,11 +51,11 @@ If you don't feel like using the command line, you can do all the same steps as 
 ```
 Osprey
 ```
-This will open the Osprey GUI in MATLAB. 
-![menu](images/osprey-startup-menu.png)
+This will open the Osprey GUI in MATLAB. <br/>
+![menu](images/osprey-startup-menu.png)<br/>
 You should select the button labelled `Load Job file`<br/>
-This will open a navigation pane, where you should navigate to the `QualityCheck.m` job file. This will likely be wherever you cloned this repository.
-![navigate](images/osprey-select-job-file.png)
+This will open a navigation pane, where you should navigate to the `QualityCheck.m` job file. This will likely be wherever you cloned this repository.<br/>
+![navigate](images/osprey-select-job-file.png)<br/>
 
 ### 2.3. Running analysis on all datasets
 The quality check steps above will need to be run for every participant, as their data comes in. This is to ensure that the quality of the data are good and there is nothing going wrong with the scanner. Once you have all the data for every participant though, you can run these altogether using the following steps.
