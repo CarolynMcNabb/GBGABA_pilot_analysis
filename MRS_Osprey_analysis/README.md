@@ -56,7 +56,22 @@ This will open the Osprey GUI in MATLAB. <br/>
 You should select the button labelled `Load Job file`<br/>
 This will open a navigation pane, where you should navigate to the `QualityCheck.m` job file. This will likely be wherever you cloned this repository.<br/>
 ![navigate](images/osprey-select-job-file.png)<br/>
+Then you just need to navigate through the steps one by one. The MRSCont file should save automatically as you go, but you might want to hit the `Save MRSCont` button anyway. 
 
 ### 2.3. Running analysis on all datasets
-The quality check steps above will need to be run for every participant, as their data comes in. This is to ensure that the quality of the data are good and there is nothing going wrong with the scanner. Once you have all the data for every participant though, you can run these altogether using the following steps.
+The quality check steps above will need to be run for every participant, as their data comes in. This is to ensure that the quality of the data are good and there is nothing going wrong with the scanner. Once you have all the data for every participant though, you can run these altogether using the following steps.<br/>
+
+First, set up the GLM for the group analysis. For consistency between analyses, use the script/GLM available in the [fMRI analysis pipeline](https://github.com/CarolynMcNabb/GBGABA_pilot_analysis/blob/main/fMRI/3.6_GLMSetup.R). If this hasn't been run already, you will need to run the script in R:
+```
+3.6_GLMSetup.R
+```
+The GLM will save into the `gbgaba/pilotBIDS/derivatives/MRS/anaylysis/GLMs` folder on the gold storage drive.
+
+Back in MATLAB, check the `GroupAnalysis.m` jobfile to make sure it is calling the right files and the right GLM. The jobfile is set up to loop through all the subject directories in the pilotBIDS folder and pull the MRS data from session 1 (`ses-01`). This is the correct set up for Work Package 1. When you want to analyse data for Work Package 2, you will need to modify both the `GroupAnalysis.m` script and the GLM script to account for the repeated measures design. I would suggest making new scripts altogether, to avoid confusion.<br/>
+Once you are happy with the jobfile and GLM, run the following script in MATLAB:
+```
+GroupAnalysis.m
+```
+The output will be stored in `gbgaba/pilotBIDS/derivatives/MRS/anaylysis/` on the gold storage drive.
+
 

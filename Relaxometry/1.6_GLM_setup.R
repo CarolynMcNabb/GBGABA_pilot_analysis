@@ -17,8 +17,9 @@ otus_GLM <- demean(cbind(diversity$observed_otus, diversity$age, diversity$hand)
 faith_GLM <- demean(cbind(diversity$faith_pd, diversity$age, diversity$hand))
 aq_GLM <- demean(cbind(diversity$aq, diversity$age, diversity$hand))
 
-# write GLMs to csv format
+# write GLMs to csv format without headers
 write.table( shannon_GLM, "GBGABA_GLMshannon.csv", sep=",", col.names=FALSE, row.names = FALSE)
 write.table( otus_GLM, "GBGABA_GLMotus.csv", sep=",", col.names=FALSE, row.names = FALSE)
 write.table( faith_GLM, "GBGABA_GLMfaith.csv", sep=",", col.names=FALSE, row.names = FALSE)
 write.table( aq_GLM, "GBGABA_GLMaq.csv", sep=",", col.names=FALSE, row.names = FALSE)
+

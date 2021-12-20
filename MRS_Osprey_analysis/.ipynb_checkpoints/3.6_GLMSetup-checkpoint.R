@@ -18,8 +18,5 @@ LCMS$hand <- recode(LCMS$hand, Right = 0, Left = 1)
 #create dataframes for GLM, including diversity measures/Autism quotient, age, handedness and motion, then demean these values for use in FSL's randomise
 LCMS <- demean(LCMS)
 
-# write GLMs to csv format without headers
+# write GLMs to csv format
 write.table(LCMS, "GLM_faecalLCMS.csv", sep=",", col.names=FALSE, row.names = FALSE)
-
-# write GLMs to csv format with headers
-write.table( LCMS, "/Volumes/gold/cinn/2020/gbgaba/pilot_BIDS/derivatives/MRS/analysis/GLMs/GLM_faecalLCMS.csv", sep=",", col.names=TRUE, row.names = FALSE)
