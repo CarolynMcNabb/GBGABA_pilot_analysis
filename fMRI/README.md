@@ -125,7 +125,17 @@ Because the next steps will look for (and use) the filtered_func_data, the follo
 ```
 3.4.4_symlink.sh
 ```
-
+***
+Incorporating output from FIX and physiological recordings using PNM and fsl_ents
+1. Using the fix4melview_thr.txt file from FIX, you must first create a txt file containing on the noise components, separated by spaces. You can do this using fsl_ents: `
+fsl_ents <.ica directory> [-o outfile] <fix4melview_file>
+`
+It's best to call the outfile ICA_noise.txt or something like that.
+1. You also need to run [PNM](https://fsl.fmrib.ox.ac.uk/fsl/fslwiki/PNM/UserGuide), which can model the effects of physiological noise in functional MRI data.
+1. Before running PNM, you need to clean the physiological data you get from LabChart7. This can be done in R using the following script: `3.4_cleanphysio.R`
+1. If you have carried out both PNM and FIX you should now have 2 text files – one for your PNM noise output, which should be input into the Voxel Confound List in FEAT.
+Rapid tide outputs a file that should be able to be incorporated into the GLM to help with cleaning. This would be a voxel-wise map though so may be very large and difficult to visualise.
+***
 
 
 ### 3.5. Warp functional data from subject space into standard space. 
@@ -325,5 +335,4 @@ Use information contained in inferential_stats_ftests_WP1.txt and inferential_st
 
 1. readout time=  ([(EPI factor (89))/(parallel image (1) )-1]*echo spacing (0.58 ms))/1000=.05104
 1. Analysis scripts have been developed mainly for analysis of workpackage 1 data but should be easy enough to modify for use in workpackage 2. The main modifications needed for workpackage 2 will be in GLM design and implementation. Hopefully the preprocessing steps shouldn't need much tinkering though.
-
-
+1. See this [article](https://www.sciencedirect.com/science/article/pii/S1053811914010428#f0010) for an idea of how to do the repeated measures design.
