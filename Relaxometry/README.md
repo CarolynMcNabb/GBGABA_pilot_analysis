@@ -2,6 +2,8 @@
 Carolyn McNabb 2021 - Find me at https://github.com/CarolynMcNabb</br>
 All analysis scripts are available [here](https://github.com/CarolynMcNabb/GBGABA_pilot_analysis/tree/main/Relaxometry)
 
+**This is work in progress and could be improved with the addition of techniques suggested by [Haast et al. (2016)](https://www.ncbi.nlm.nih.gov/pmc/articles/PMC5114304/).**
+
 The first time you run these scripts, whether on the virtual machine (VM) or on MacOS, you will need to make the scripts executable. To do this, run the following command in the terminal, replacing `script_name` with the relavant script name and `path_to_script` with the relevant path to the directory where your scripts are kept. Note that this is likely to be a different path for the VM and MacOS. You only have to do this **ONCE** for each script.
 ```
 chmod u+x path_to_script/script_name
@@ -221,13 +223,37 @@ In General Linear Model window:
 
 Notes: GLM files can also be found in the GLMs folder in the [github directory](https://github.com/CarolynMcNabb/GBGABA_pilot_analysis/tree/main/Relaxometry/GLMs)
 
-## 1.7. Run Randomise
+## 1.7. Arrange TI files into a single file and then run Randomise
+First, you need to merge all the T1 files from each subject into a single 4D nifti file and create a GLM to tell randomise which group each subject belongs to and what contrasts you want to run.</br>
+First, create a file with the paths to the T1 maps.</br>
+In the Ubuntu terminal, type:
+```
+1.7.1_T1paths.sh
+```
 
+Modify the `1.7.2_randomise.sh` script with the GLM design and number of permutations you wish to work with. The default is set to *otus* and *500* permutations.</br>
+You can now run randomise using the following command:
+```
+1.7.2_randomise.sh
+```
 
 ## 1.8. Create contrast maps using QUIT
-qi glmcontrasts
+Randomise does not save any contrast files, i.e. group difference maps, it only saves the statistical maps. For quantitative imaging, the contrasts can be informative to look at, as if scaled correctly, they can be interpreted as effect size maps. Contrast maps are particularly useful if used with the dual-coding visualisation technique.
+
+The following commands should be run wherever you have been running the `quit` commands (e.g. the MacOS terminal):</br>
+```
+PATH=$PATH:/Volumes/GoogleDrive/My\ Drive/Software/
+export PATH
+PATH=$PATH:/Volumes/GoogleDrive/My\ Drive/GitHub/GBGABA_pilot_analysis/Relaxometry
+export PATH
+cd /Volumes/gold/cinn/2020/gbgaba/pilot_BIDS/derivatives/relaxometry/analysis/GLMs/
+echo "$(tail -n +6 otus.mat)" > design.txt
+echo "$(tail -n +8 otus.con)" > contrasts.txt
+qi glm_contrasts /Volumes/gold/cinn/2020/gbgaba/pilot_BIDS/derivatives/relaxometry/analysis/GBGABA_MNI_T1s.nii.gz /Volumes/gold/cinn/2020/gbgaba/pilot_BIDS/derivatives/relaxometry/analysis/GLMs/design.txt /Volumes/gold/cinn/2020/gbgaba/pilot_BIDS/derivatives/relaxometry/analysis/GLMs/contrasts.txt --out=/Volumes/gold/cinn/2020/gbgaba/pilot_BIDS/derivatives/relaxometry/analysis/T1_contrasts_
+```
 
 ## 1.9. visualisation using dual-coding visualisation technique
+The dual-coding software can be found [here](https://github.com/spinicist/nanslice) and the documentation can be found [here](https://nanslice.readthedocs.io/en/latest/) </br>
 
 ---
 
